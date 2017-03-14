@@ -1,2 +1,2 @@
 # Viz-ly
-Viz-ly is a consumer driven data visualizer to help consumer understand personal trends.
+Viz-ly is a user driven data visualizer to help consumers understand personal trends.
