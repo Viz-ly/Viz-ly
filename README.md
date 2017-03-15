@@ -58,12 +58,11 @@ Setup
 npm install
 ```
 
- 
-
-Compile
----
-
+To Run in Production mode:
 ```
-npm run compile
+npm run build
 ```
->>>>>>> continuing with react setup
+To Run in Dev mode:
+```
+npm run dev 
+```
