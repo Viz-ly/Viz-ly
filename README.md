@@ -21,15 +21,15 @@
 
 ## Usage
 
-> Some usage instructions
+Take your pictures,
+Upload them to Viz.ly
+Share your results with friends. Who you are with the world.
 
 ## Requirements
 
 - Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- NEED TO UPDATE
+
 
 ## Development
 
@@ -38,14 +38,12 @@
 From within the root directory:
 
 ```sh
-npm install -g bower
 npm install
-bower install
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/spreadsheets/d/13ymrJ6f36_wVQgLU5XTUoTSA-I5PvN6kvzrhztGYcoA/edit?usp=sharing)
 
 
 ## Contributing
