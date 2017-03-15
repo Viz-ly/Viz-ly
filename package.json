@@ -7,13 +7,20 @@
   "scripts": {
     "compile": "webpack",
     "dev": "webpack -d --watch",
-    "build" : "webpack -p"
+    "build": "webpack -p",
+    "start": "nodemon src/server/server.js"
   },
   "dependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
+    "body": "^5.1.0",
+    "body-parser": "^1.17.1",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.9.0",
+    "parser": "^0.1.4",
+    "path": "^0.12.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "webpack": "^2.2.1"
