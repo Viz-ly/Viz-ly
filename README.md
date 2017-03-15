@@ -2,6 +2,7 @@
 
 > Viz.ly is a user driven data visualizer to help consumers understand personal trends in their photos.
 
+<<<<<<< HEAD
 ## Team
 
   - Brandon Wong
@@ -49,3 +50,19 @@ View the project roadmap [here](https://docs.google.com/spreadsheets/d/13ymrJ6f3
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+=======
+Setup
+---
+
+```
+npm install
+```
+
+To Run in Production mode:
+```
+npm run build
+```
+To Run in Dev mode:
+```
+npm run dev 
+```
