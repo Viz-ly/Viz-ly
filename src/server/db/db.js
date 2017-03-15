@@ -1,10 +1,9 @@
-
 var mongoose = require('mongoose');
 var mongodb = require('mongodb');
 
 mongoose.Promise = Promise;
 
-mongoURI = 'mongodb://localhost/jonTestDB'; //this will be replaced with AWS address
+mongoURI = 'mongodb://localhost/vizly'; //this will be replaced with AWS address
 mongoose.connect(mongoURI);
 
 // // Run in seperate terminal window using 'mongod'
@@ -43,4 +42,3 @@ module.exports.handler = function(request) {
 
 module.exports.db = db;
 module.exports.User = User;
-
