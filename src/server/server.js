@@ -1,9 +1,13 @@
 var app = require('./app.js');
 var db = require('./db/db.js');
 var fileUpload = require('express-fileUpload');
-var Vision = require('@google-cloud/vision');
-var google = require('googleapis');
-var GoogleAuth = require('google-auth-library');
+var gcloud = require('google-cloud')( {
+  projectId: 'vizly-161619',
+  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/Vizly-143f14765612.json',
+  key: ''
+});
+
 
 
 var port = process.env.PORT || 3000;
