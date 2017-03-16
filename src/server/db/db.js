@@ -7,6 +7,9 @@ mongoURI = 'mongodb://localhost/vizly';
 mongoose.connect(mongoURI);
 
 
+//mongo "mongodb://mycluster0-shard-00-00-wpeiv.mongodb.net:27017/admin?replicaSet=Mycluster0-shard-0" --ssl --TeamVizly kay --password HR72Go_Vizly!
+
+
 
 // // Run in seperate terminal window using 'mongod'
 var db = mongoose.connection;
