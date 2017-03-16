@@ -13,3 +13,6 @@ app.listen(3000, function() {
   console.log('Server listening.  Go Vizly');
 });
 
+//For get/set routes go to routes.js
+module.exports.app = app;
+
