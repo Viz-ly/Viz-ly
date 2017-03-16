@@ -3,8 +3,10 @@ var mongodb = require('mongodb');
 
 mongoose.Promise = Promise;
 
-mongoURI = 'mongodb://localhost/vizly'; //this will be replaced with AWS address
+mongoURI = 'mongodb://localhost/vizly'; 
 mongoose.connect(mongoURI);
+
+
 
 // // Run in seperate terminal window using 'mongod'
 var db = mongoose.connection;
