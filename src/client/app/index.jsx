@@ -6,6 +6,7 @@ class App extends React.Component {
     return (
       <div>
         <p> Hello Viz.ly!</p>
+        
       </div>
     );
   }
