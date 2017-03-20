@@ -39,9 +39,8 @@ passport.use(new FacebookStrategy({
   callbackURL: configAuth.facebookAuth.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
-    User.findOne({'userName': profile.id}, function(err, user) {
+    User.findOne({'facebook.id': profile.id}, function(err, user) {
       if (err) { 
-        console.log(err);
         return done(err); 
       }
       //if no user was found, create a new user with values from Facebook
@@ -56,12 +55,13 @@ passport.use(new FacebookStrategy({
         });
         console.log(user);
         user.save(function(err) {
-          if (err) { console.log(err); }
+          if (err) { return done(err); }
           return done(err, user);
         });
       } else {
         //found user. Return
-        return done(err, user);
+        console.log(user);
+        return done(null, user);
       }
     });
   }
@@ -77,8 +77,8 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+  passport.authenticate('facebook', { successRedirect: '/login',
+                                      failureRedirect: '/' }));
 
 app.listen(3000, function() {
   console.log('Server listening.  Go Vizly');
