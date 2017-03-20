@@ -26,9 +26,3 @@ app.listen(port, function() {
 
 //For get/set routes go to routes.js
 
-
-
-app.listen(3000, function() {
-  console.log('Server listening.  Go Vizly');
-});
-

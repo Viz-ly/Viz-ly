@@ -1,6 +1,9 @@
 var express = require('express');
 var path = require('path');
+var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
+var fileUpload = require('express-fileUpload');
+
 
 var session = require('express-session');
 var db = require('./db/db.js');
@@ -19,6 +22,14 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+var gcloud = require('google-cloud')( {
+  projectId: 'vizly-161619',
+  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/Vizly-143f14765612.json',
+  key: visionKey.VISION_API_KEY
+});
+
 
 //ROUTES GO HERE
 var app = express();
@@ -109,7 +120,36 @@ app.get('/testfind', function(req, res) {
 });
 
 
+app.use(fileUpload());
 
+
+
+app.post('/upload', function(req, res) {
+  console.log('in upload!');
+  if (!req.files) {
+    return res.status(400).send('No files were uploaded...');
+  }
+
+  var sampleFile = req.files.sampleFile;
+  sampleFile.mv(__dirname + '/db/pics/hi.jpg', function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    var vision = gcloud.vision({
+      projectId: 'vizly-161619',
+      keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+    });
+    vision.detectLabels(__dirname + '/db/pics/hi.jpg', function(err, result, res) {
+      if (err) {
+        console.log('Error ', err);
+      } else {
+        console.log(result);
+      }
+    });
+    res.send('File uploaded!');
+  });
+
+});
 
 
 module.exports = app;
