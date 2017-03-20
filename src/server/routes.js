@@ -7,11 +7,11 @@ var db = require('./db/db.js');
 //ROUTES GO HERE
 
 
-app.get('/testget', function(req, res) {
-  console.log('testget fired, calling addFakeUser');
-  db.addFakeUser(req);
-  res.end();
-});
+// app.get('/testget', function(req, res) {
+//   console.log('testget fired, calling addFakeUser');
+//   db.addFakeUser(req);
+//   res.end();
+// });
 
 //All get and post requests come here before middleware
 

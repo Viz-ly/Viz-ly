@@ -13,11 +13,11 @@ app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../client'));
 
 
-app.get('/testget', function(req, res) {
-  console.log('testget fired, calling addFakeUser');
-  db.addFakeUser(req);
-  res.end();
-});
+// app.get('/testget', function(req, res) {
+//   console.log('testget fired, calling addFakeUser');
+//   db.addFakeUser(req);
+//   res.end();
+// });
 
 
 
