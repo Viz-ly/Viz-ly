@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // app.use('/', express.static(__dirname + '/../client'));
 app.get('/', function(req, res) {
-  res.send('Hello Viz.ly!');
+  res.send('Gary sux');
 });
 
 // app.get('/testget', function(req, res) {
