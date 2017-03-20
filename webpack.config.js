@@ -17,7 +17,10 @@ var config = {
         test: /\.jsx?/,
         include: APP_DIR,
         loader: 'babel-loader'
-      }
+      },
+      { 
+        test: /\.(png|jpg|jpeg|gif|svg|eps)$/, 
+        loader: 'url-loader?limit=100000' }
     ]
   }
 };

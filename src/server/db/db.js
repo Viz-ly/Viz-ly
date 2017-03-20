@@ -14,12 +14,19 @@ db.once('open', function () {
 });
 
 var Schema = mongoose.Schema({
-  userName: String,
+  name: String,
   email: String,
-  picsUrl: String
-});;
+  username: String,
+  provider: String,
+  //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
+  facebook: Object
+});
+
+
+
 
 var User = db.model('User', Schema);
+
 
 module.exports.handler = function(request) {
   console.log('handler fired');
