@@ -17,7 +17,7 @@ var Schema = mongoose.Schema({
   userName: String,
   email: String,
   picsUrl: String
-});;
+});
 
 var User = db.model('User', Schema);
 
