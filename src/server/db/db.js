@@ -3,8 +3,13 @@ var mongodb = require('mongodb');
 
 mongoose.Promise = Promise;
 
-mongoURI = 'mongodb://localhost/vizly'; //this will be replaced with AWS address
+mongoURI = 'mongodb://localhost/vizly'; 
 mongoose.connect(mongoURI);
+
+
+//mongo "mongodb://mycluster0-shard-00-00-wpeiv.mongodb.net:27017/admin?replicaSet=Mycluster0-shard-0" --ssl --TeamVizly kay --password HR72Go_Vizly!
+
+
 
 // // Run in seperate terminal window using 'mongod'
 var db = mongoose.connection;
@@ -17,19 +22,19 @@ var Schema = mongoose.Schema({
   userName: String,
   email: String,
   picsUrl: String
-});;
+});
 
 var User = db.model('User', Schema);
 
-module.exports.handler = function(request) {
-  console.log('handler fired');
+module.exports.addFakeUser = function(request) {
+  console.log('addFakeUser fired');
   var newInsert = new User({
     userName: 'mister mctester',
     email: 'arglebargle@freemail.com',
     picsUrl: 'TBD'
   });
   newInsert.save();
-  console.log('db handler finish');
+  console.log('db add user finish');
 };
 
 // module.exports.search = function(request) {
