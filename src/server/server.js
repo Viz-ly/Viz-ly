@@ -2,7 +2,7 @@ var app = require('./app.js');
 var db = require('./db/db.js');
 
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.log('Server listening on ' + port + '.  Go Vizly');
