@@ -8,7 +8,7 @@
     "compile": "webpack",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "nodemon src/server/server.js"
+    "start": "nodemon src/server/server.js & webpack -d --watch"
   },
   "dependencies": {
     "babel-core": "^6.24.0",
