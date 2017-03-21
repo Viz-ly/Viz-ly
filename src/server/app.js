@@ -33,9 +33,10 @@ app.get('/testget', function(req, res) {
 
 app.get('/testfind', function(req, res) {
   console.log('testfind fired');
-  db.User.count()
+  db.User.find()
   .then(function (data) {
     console.log(data);
+    res.json(data);
   });
 });
 
