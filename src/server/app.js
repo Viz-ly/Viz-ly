@@ -15,11 +15,11 @@ app.use('/', express.static(__dirname + '/../client'));
 //   res.send('Gary sux');
 // });
 
-// app.get('/testget', function(req, res) {
-//   console.log('testget fired, calling addFakeUser');
-//   db.addFakeUser(req);
-//   res.end();
-// });
+app.get('/testget', function(req, res) {
+  console.log('testget fired, calling addFakeUser');
+  db.addFakeUser(req);
+  res.end();
+});
 
 
 
@@ -31,13 +31,13 @@ app.use('/', express.static(__dirname + '/../client'));
 //   db.handler(req);
 // });
 
-// app.get('/testfind', function(req, res) {
-//   console.log('testfind fired');
-//   db.User.count()
-//   .then(function (data) {
-//     console.log(data);
-//   });
-// });
+app.get('/testfind', function(req, res) {
+  console.log('testfind fired');
+  db.User.count()
+  .then(function (data) {
+    console.log(data);
+  });
+});
 
 
 
