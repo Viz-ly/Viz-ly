@@ -9,6 +9,24 @@ const iconStyle = {
 
 
 class App extends React.Component {
+  handleUpload(e) {
+    debugger;
+    // e.preventDefault();
+    console.log('handle upload!');
+    // $.ajax({
+    //   url: '/upload',
+    //   type: 'POST',
+    //   cache: false,
+    //   // contentType: 'application/json',
+    //   data: $('form').serialize(),
+    //   success: function(data) {
+    //     console.log(data);
+    //   },
+    //   error: function() {
+    //     console.log('error');
+    //   }
+    // });
+  }
   render () {
     return (
       <div style={{paddingLeft: 25}}>

@@ -126,7 +126,8 @@ app.use(fileUpload());
 
 app.post('/upload', function(req, res) {
   // console.log('in upload!');
-  // console.log('files----------', req.files);
+  console.log('files----------', req.files);
+  // console.log('dataaaaaaaa', req.files.sampleFile.data.toString());
   if (!req.files) {
     res.status(400).send('No files were uploaded...');
   }
