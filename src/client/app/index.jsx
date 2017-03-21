@@ -13,6 +13,7 @@ class App extends React.Component {
     debugger;
     // e.preventDefault();
     console.log('handle upload!');
+    var form = new FormData();
     // $.ajax({
     //   url: '/upload',
     //   type: 'POST',
