@@ -125,14 +125,17 @@ app.use(fileUpload());
 
 
 app.post('/upload', function(req, res) {
-  console.log('in upload!');
-  console.log('files----------', req.files);
+  // console.log('in upload!');
+  // console.log('files----------', req.files);
   if (!req.files) {
-    return res.status(400).send('No files were uploaded...');
+    res.status(400).send('No files were uploaded...');
   }
 
   var sampleFile = req.files.sampleFile;
   console.log('sample files---------', sampleFile.length);
+  if (sampleFile.length === undefined) {
+    sampleFile = [sampleFile];
+  }
 
   var resultCount = 0;
   var vision = gcloud.vision({
