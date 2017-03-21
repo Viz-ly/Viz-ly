@@ -11,7 +11,9 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../client'));
-
+// app.get('/', function(req, res) {
+//   res.send('Gary sux');
+// });
 
 app.get('/testget', function(req, res) {
   console.log('testget fired, calling addFakeUser');
@@ -29,13 +31,14 @@ app.get('/testget', function(req, res) {
 //   db.handler(req);
 // });
 
-// app.get('/testfind', function(req, res) {
-//   console.log('testfind fired');
-//   db.User.count()
-//   .then(function (data) {
-//     console.log(data);
-//   });
-// });
+app.get('/testfind', function(req, res) {
+  console.log('testfind fired');
+  db.User.find()
+  .then(function (data) {
+    console.log(data);
+    res.json(data);
+  });
+});
 
 
 

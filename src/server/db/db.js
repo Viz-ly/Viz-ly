@@ -1,3 +1,4 @@
+
 var mongoose = require('mongoose');
 var mongodb = require('mongodb');
 ///
@@ -6,7 +7,9 @@ mongoose.Promise = Promise;
 mongoURI = 'mongodb://TeamVizly:123456789teamVIZLY@cluster0-shard-00-00-zblxo.mongodb.net:27017,cluster0-shard-00-01-zblxo.mongodb.net:27017,cluster0-shard-00-02-zblxo.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
 
 
+
 mongoose.connect(mongoURI);
+
 
 
 var db = mongoose.connection;
@@ -23,6 +26,7 @@ var Schema = mongoose.Schema({
   facebook: Object,
   pics: Array
 });
+
 
 var User = db.model('User', Schema);
 
@@ -42,12 +46,13 @@ module.exports.addFakeUser = function(request) {
   console.log('db add user finish');
 };
 
-// module.exports.search = function(request) {
-//   console.log('search fired');
-//   User.findAll()
-//     .then(
-//   });
-// }
+
+// // module.exports.search = function(request) {
+// //   console.log('search fired');
+// //   User.findAll()
+// //     .then(
+// //   });
+// // }
 
 
 module.exports.db = db;

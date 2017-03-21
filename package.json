@@ -8,7 +8,7 @@
     "compile": "webpack",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "nodemon src/server/server.js"
+    "start": "nodemon src/server/server.js & webpack -d --watch"
   },
   "dependencies": {
     "babel-core": "^6.24.0",
@@ -17,8 +17,10 @@
     "babel-preset-react": "^6.23.0",
     "body": "^5.1.0",
     "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "mongodb": "^2.2.24",
     "mongoose": "^4.9.0",
+    "nodemon": "^1.11.0",
     "parser": "^0.1.4",
     "path": "^0.12.7",
     "react": "^15.4.2",

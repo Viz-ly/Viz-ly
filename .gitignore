@@ -29,6 +29,6 @@ node_modules/
 bower_components/
 
 photos/
-config/vision.js
+src/client/config/vision.js
 
 src/client/public/bundle.js
