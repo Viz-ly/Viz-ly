@@ -135,39 +135,30 @@ app.post('/upload', function(req, res) {
   console.log('sample files---------', sampleFile.length);
 
   var resultCount = 0;
+  var vision = gcloud.vision({
+    projectId: 'vizly-161619',
+    keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  });
   for (var file = 0; file < sampleFile.length; file++) {
     (function(file) {
-      sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',
-        function(err) {
-          if (err) {
-            return res.status(500).send(err);
-          }
-          // result++;
-          // if (result === sampleFile.length) {
-          //   res.send('Files moved!');
-          // }
-
-
+      sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',function(err) {
+        if (err) {
+          res.status(500).send(err);
+        }
         console.log('file---------', file);
-          var vision = gcloud.vision({
-            projectId: 'vizly-161619',
-            keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-          });
-          vision.detectLabels(__dirname + '/db/pics/pic' + file + '.jpg', function(err, result, apiResponse) {
-            if (err) {
-              console.log('Error ', err);
-            } else {
-              resultCount++
-              console.log('result-------------', result);
-              if (resultCount === sampleFile.length) {
-                res.send('Files uploaded!');
-              }
+        vision.detectLabels(__dirname + '/db/pics/pic' + file + '.jpg', function(err, result, apiResponse) {
+          if (err) {
+            // console.log('Error ', err);
+            res.status(500).send(err);
+          } else {
+            resultCount++
+            console.log('result-------------', result);
+            if (resultCount === sampleFile.length) {
+              res.send('Files uploaded!');
             }
-          });
-            // res.send('File uploaded!');
-
-
-
+          }
+        });
+          // res.send('File uploaded!');
       });
 
     })(file);
