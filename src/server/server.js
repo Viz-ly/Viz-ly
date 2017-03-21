@@ -3,6 +3,9 @@ var path = require('path');
 var bodyParser = require('body-parser');
 //var cookieParser = require('cookie-parser');
 var session = require('express-session');
+
+var app = require('./app.js');
+
 var db = require('./db/db.js');
 var User = db.User;
 var passport = require('passport');
@@ -20,7 +23,7 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var app = express();
+//var app = express();
 //app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(session({ secret: 'keyboard cat', 
@@ -85,3 +88,11 @@ app.listen(3000, function() {
 });
 
 
+
+// app.get('/testget', function(req, res) {
+//   console.log('testget fired, calling addFakeUser');
+//   db.addFakeUser(req);
+//   res.end();
+// });
+
+//For get/set routes go to routes.js

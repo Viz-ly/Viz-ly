@@ -36,6 +36,7 @@
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "file-loader": "^0.10.1",
     "url-loader": "^0.5.8",
+    "express": "^4.15.2",
     "webpack": "^2.2.1"
   },
   "babel": {
