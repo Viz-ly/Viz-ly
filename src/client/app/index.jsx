@@ -9,24 +9,47 @@ const iconStyle = {
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: []
+    };
+  }
   handleUpload(e) {
     debugger;
-    // e.preventDefault();
+    e.preventDefault();
     console.log('handle upload!');
     var form = new FormData();
-    // $.ajax({
-    //   url: '/upload',
-    //   type: 'POST',
-    //   cache: false,
-    //   // contentType: 'application/json',
-    //   data: $('form').serialize(),
-    //   success: function(data) {
-    //     console.log(data);
-    //   },
-    //   error: function() {
-    //     console.log('error');
-    //   }
-    // });
+    var files = this.state.files;
+
+
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+
+      // Check the file type.
+      if (!file.type.match('image.*')) {
+        continue;
+      }
+
+      // Add the file to the request.
+      form.append('sampleFile', file, file.name);
+    }
+    $.ajax({
+      url: '/upload',
+      type: 'POST',
+      data: form,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        console.log(data);
+      },
+      error: function() {
+        console.log('error');
+      }
+    });
+  }
+  handleChange(e) {
+    this.setState({files: e.target.files})
   }
   render () {
     return (

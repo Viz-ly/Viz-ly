@@ -171,7 +171,7 @@ app.post('/upload', function(req, res) {
                 arrayOfObj.push({key: words, count: obj[words]});
               }
 
-
+              // res.json(arrayOfObj);
               res.send(arrayOfObj);
             }
           }
