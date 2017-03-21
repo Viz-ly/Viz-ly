@@ -32,3 +32,6 @@ photos/
 src/client/config/vision.js
 
 src/client/public/bundle.js
+
+## API keys
+src/client/env/config.js
