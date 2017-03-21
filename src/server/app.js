@@ -142,6 +142,9 @@ app.post('/upload', function(req, res) {
     projectId: 'vizly-161619',
     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
   });
+
+  var arrayStrings = [];
+
   for (var file = 0; file < sampleFile.length; file++) {
     (function(file) {
       sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',function(err) {
@@ -155,9 +158,20 @@ app.post('/upload', function(req, res) {
             res.status(500).send(err);
           } else {
             resultCount++
+            arrayStrings = arrayStrings.concat(result);
             console.log('result-------------', result);
             if (resultCount === sampleFile.length) {
-              res.send('Files uploaded!');
+              var arrayOfObj = [];
+              var obj = {};
+              for (var word = 0; word < arrayStrings.length; word++) {
+                obj[arrayStrings[word]] ? obj[arrayStrings[word]]++ : obj[arrayStrings[word]] = 1;
+              }
+              for (var words in obj) {
+                arrayOfObj.push({key: words, count: obj[words]});
+              }
+
+
+              res.send(arrayOfObj);
             }
           }
         });
