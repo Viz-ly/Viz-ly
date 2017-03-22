@@ -3,17 +3,20 @@ import {render} from 'react-dom';
 import $ from 'jquery';
 import Login from './components/login.jsx';
 import Upload from './components/upload.jsx';
+import WordList from './components/wordlist.jsx';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      files: []
+      files: [],
+      wordList: []
     };
   }
   handleUpload(e) {
     e.preventDefault();
+    var self = this;
     console.log('handle upload!');
     var form = new FormData();
     var files = this.state.files;
@@ -34,6 +37,7 @@ class App extends React.Component {
       processData: false,
       success: function(data) {
         console.log(data);
+        self.setState({wordList: data});
       },
       error: function() {
         console.log('error');
@@ -48,6 +52,7 @@ class App extends React.Component {
       <div>
         <Login/>
         <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
+        <WordList list={this.state.wordList}/>
       </div>
     );
   }
