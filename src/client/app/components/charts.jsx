@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import $ from 'jquery';
 
-class App extends React.Component {
+class Charts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,5 +62,3 @@ class App extends React.Component {
     );
   }
 }
-
-render(<App/>, document.getElementById('app'));
