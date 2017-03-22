@@ -35,8 +35,8 @@ passport.deserializeUser(function(id, done) {
 var app = express();
 
 app.use(bodyParser.json());
-app.use(session({ secret: 'keyboard cat', 
-  resave: false, 
+app.use(session({ secret: 'keyboard cat',
+  resave: false,
   saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,8 +53,8 @@ passport.use(new FacebookStrategy({
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
-      if (err) { 
-        return done(err); 
+      if (err) {
+        return done(err);
       }
       //if no user was found, create a new user with values from Facebook
       if (!user) {
@@ -100,7 +100,9 @@ app.get('/userLoggedIn', function(req, res) {
 });
 
 
-
+app.get('/login', function(req,res) {
+  res.send('You are logged in!');
+});
 
 //All get and post requests come here before middleware
 
