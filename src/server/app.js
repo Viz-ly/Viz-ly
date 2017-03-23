@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-// var visionKey = require('./config/vision.js');
+var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 
@@ -23,12 +23,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// var gcloud = require('google-cloud')( {
-//   projectId: 'vizly-161619',
-//   keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-//   credentials: __dirname + '/config/Vizly-143f14765612.json',
-//   key: visionKey.VISION_API_KEY
-// });
+var gcloud = require('google-cloud')( {
+  projectId: 'vizly-161619',
+  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/Vizly-143f14765612.json',
+  key: visionKey.VISION_API_KEY
+});
 
 
 //ROUTES GO HERE
