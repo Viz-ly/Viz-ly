@@ -13,7 +13,8 @@ class App extends React.Component {
     this.state = {
       files: [],
       wordList: [],
-      color: 'gree',
+      uploading: false,
+      error: false,
       user: null
     };
   }
@@ -40,6 +41,7 @@ class App extends React.Component {
 
   handleUpload(e) {
     e.preventDefault();
+    this.setState({uploading: true, error: false});
     var self = this;
     console.log('handle upload!');
     var form = new FormData();
@@ -61,10 +63,11 @@ class App extends React.Component {
       processData: false,
       success: function(data) {
         console.log(data);
-        self.setState({wordList: data});
+        self.setState({wordList: data, uploading: false});
       },
       error: function() {
         console.log('error');
+        self.setState({error: true, uploading: false});
       }
     });
   }
@@ -75,10 +78,13 @@ class App extends React.Component {
     if (this.state.user) {
       return (
         <div>
-        <h4> Welcome, {this.state.user}!</h4>
-        <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
-          <WordList list={this.state.wordList}/>
-          </div>
+          <h4> Welcome, {this.state.user}!</h4>
+          <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
+          {this.state.error && <h6>Sorry you encountered an error. Please try again later!</h6>}
+          {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> : <WordList list={this.state.wordList}/>}
+
+
+        </div>
       );
     } else {
       return (
