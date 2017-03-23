@@ -1,16 +1,18 @@
 var express = require('express');
 var path = require('path');
-// var visionKey = require('./config/vision.js');
+var visionKey = require('./config/vision');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
+// var visionKey = null;
+// var configAuth = null;
 
 
 var session = require('express-session');
-var db = require('./db/db.js');
+var db = require('./db/db');
 var User = db.User;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-// var configAuth = require('../client/env/config.js');
+var configAuth = require('../client/env/config');
 
 
 passport.serializeUser(function(user, done) {
