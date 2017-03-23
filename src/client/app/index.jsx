@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Login from './components/login.jsx';
 import Upload from './components/upload.jsx';
 import WordList from './components/wordlist.jsx';
-
+import Charts from './components/charts.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -90,7 +90,7 @@ class App extends React.Component {
       return (
         <div>
           <Login/>
-
+          <Charts/>
         </div>
       );
     };
