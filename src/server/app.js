@@ -23,10 +23,9 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+
 var gcloud = require('google-cloud')( {
   projectId: 'vizly-161619',
-  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  credentials: __dirname + '/config/Vizly-143f14765612.json',
   key: visionKey.VISION_API_KEY || process.env.VISION_API_KEY
 });
 
