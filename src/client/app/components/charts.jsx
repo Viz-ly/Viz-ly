@@ -342,5 +342,20 @@ export default class Charts extends React.Component {
     //     <div>NO CHARTS!</div>
     //   );
     // }
+class BarChart extends React.Components {
+  constructor(props) {
+    super(props)
+    this.state: {
+      // name: ''
+    }
+    //sometimes the binding of this is placed in here
+  }
+
+  render() {
+    return (
+      <div>
+        <entry name={this.state.name}>
+      </div>
+    )
   }
 }
