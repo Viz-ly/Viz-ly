@@ -12,9 +12,32 @@ class App extends React.Component {
     super(props);
     this.state = {
       files: [],
-      wordList: []
+      wordList: [],
+      color: 'gree',
+      user: null
     };
   }
+
+  componentWillMount() {
+    console.log('componentWillMount fired!');
+    $.ajax({
+      url: '/userLoggedIn',
+      type: 'GET',
+      contentType: false,
+      processData: false,
+      success: (data) => {
+        console.log('ajax sent!');
+        this.setState({user: data.name});
+        console.log(this.state.user);
+      },
+      error: function() {
+        console.log('error');
+      }
+    });
+  }
+
+
+
   handleUpload(e) {
     e.preventDefault();
     var self = this;
@@ -49,13 +72,22 @@ class App extends React.Component {
     this.setState({files: e.target.files})
   }
   render () {
-    return (
-      <div>
-        <Login/>
+    if (this.state.user) {
+      return (
+        <div>
+        <h1> Who is the best???????? {this.state.user} is the best!!!!</h1>
         <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
-        <WordList list={this.state.wordList}/>
-      </div>
-    );
+          <WordList list={this.state.wordList}/>
+          </div>
+      );
+    } else {
+      return (
+        <div>
+          <Login/>
+          
+        </div>
+      );
+    };
   }
 }
 

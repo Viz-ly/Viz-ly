@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var visionKey = require('./config/vision.js');
+// var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileUpload');
 
@@ -23,12 +23,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var gcloud = require('google-cloud')( {
-  projectId: 'vizly-161619',
-  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  credentials: __dirname + '/config/Vizly-143f14765612.json',
-  key: visionKey.VISION_API_KEY
-});
+// var gcloud = require('google-cloud')( {
+//   projectId: 'vizly-161619',
+//   keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+//   credentials: __dirname + '/config/Vizly-143f14765612.json',
+//   key: visionKey.VISION_API_KEY
+// });
 
 
 //ROUTES GO HERE
@@ -42,9 +42,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', express.static(__dirname + '/../client'));
-// app.get('/', function(req, res) {
-//   res.send('Gary sux');
-// });
+app.get('/', function(req, res) {
+  res.send('Gary sux');
+});
 
 passport.use(new FacebookStrategy({
   clientID: configAuth.facebookAuth.clientID,
@@ -66,14 +66,14 @@ passport.use(new FacebookStrategy({
           provider: 'facebook',
           facebook: profile._json
         });
-        console.log(user);
+        console.log(user + 'veggies!');
         user.save(function(err) {
           if (err) { return done(err); }
           return done(err, user);
         });
       } else {
         //found user. Return
-        console.log(user);
+        console.log(user + 'veggies!');
         return done(null, user);
       }
     });
@@ -91,13 +91,12 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/login',
-                                      failureRedirect: '/' }));
+  passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
 
-app.get('/testget', function(req, res) {
-  console.log('testget fired, calling addFakeUser');
-  db.addFakeUser(req);
-  res.end();
+app.get('/userLoggedIn', function(req, res) {
+  console.log('---------------------------', req.user);
+  // db.addFakeUser(req);
+  res.send(req.user);
 });
 
 
@@ -111,6 +110,12 @@ app.get('/testget', function(req, res) {
 // });
 
 app.get('/testfind', function(req, res) {
+  if (req.user) {
+    console.log('user here!');
+  }
+  if (!req.user) {
+    console.log('no user here');
+  }
   console.log('testfind fired');
   db.User.find()
   .then(function (data) {
