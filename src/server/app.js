@@ -115,7 +115,7 @@ var createObject = function(req, arrayStrings) {
 
 
 app.get('/userLoggedIn', function(req, res) {
-  console.log('---------------------------', req.user);
+  // console.log('---------------------------', req.user);
   // db.addFakeUser(req);
   // var arrayOfObj = [];
   if (req.user) {
