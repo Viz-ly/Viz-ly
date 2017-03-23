@@ -47,9 +47,9 @@ app.get('/', function(req, res) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: configAuth.facebookAuth.clientID,
-  clientSecret: configAuth.facebookAuth.clientSecret,
-  callbackURL: configAuth.facebookAuth.callbackURL
+  clientID: configAuth.facebookAuth.clientID || process.env.Facebook_clientID,
+  clientSecret: configAuth.facebookAuth.clientSecret || process.env.Facebook_clientSecret,
+  callbackURL: configAuth.facebookAuth.callbackURL || process.env.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
