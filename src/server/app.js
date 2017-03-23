@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 // var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
-var fileUpload = require('express-fileUpload');
+var fileUpload = require('express-fileupload');
 
 
 var session = require('express-session');
