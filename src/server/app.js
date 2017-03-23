@@ -27,11 +27,12 @@ passport.deserializeUser(function(id, done) {
 
 
 var gcloud = require('google-cloud')( {
-  projectId: 'vizly-161619',
+  projectId: process.env.VISION_PROJECT_ID,
   credentials: {
-      client_email: process.env.VISION_CLIENT_EMAIL,
-      private_key: process.env.VISION_PRIVATE_KEY
-    }
+    client_email: process.env.VISION_CLIENT_EMAIL,
+    private_key: process.env.VISION_PRIVATE_KEY
+  },
+  key: process.env.VISION_API_KEY
 });
 
 
