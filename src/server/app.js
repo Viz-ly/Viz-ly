@@ -10,7 +10,7 @@ var db = require('./db/db.js');
 var User = db.User;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var configAuth = require('../client/env/config.js');
+// var configAuth = require('../client/env/config.js');
 
 
 passport.serializeUser(function(user, done) {
