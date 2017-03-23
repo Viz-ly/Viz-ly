@@ -75,13 +75,19 @@ class App extends React.Component {
     this.setState({files: e.target.files})
   }
   render () {
+    console.log('uploading?', this.state.uploading);
     if (this.state.user) {
       return (
         <div>
           <h4> Welcome, {this.state.user}!</h4>
           <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
           {this.state.error && <h6>Sorry you encountered an error. Please try again later!</h6>}
-          {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> : <WordList list={this.state.wordList}/>}
+          {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
+                <div>
+                  <WordList list={this.state.wordList}/>
+                  <Charts list={this.state.wordList}/>
+                </div>
+                }
 
 
         </div>
@@ -90,7 +96,7 @@ class App extends React.Component {
       return (
         <div>
           <Login/>
-          <Charts/>
+
         </div>
       );
     };
