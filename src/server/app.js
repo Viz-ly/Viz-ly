@@ -47,9 +47,9 @@ app.get('/', function(req, res) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: configAuth.facebookAuth.clientID || process.env.Facebook_clientID,
-  clientSecret: configAuth.facebookAuth.clientSecret || process.env.Facebook_clientSecret,
-  callbackURL: configAuth.facebookAuth.callbackURL || process.env.callbackURL
+  clientID: process.env.Facebook_clientID || configAuth.facebookAuth.clientID,
+  clientSecret: process.env.Facebook_clientSecret || configAuth.facebookAuth.clientSecret,
+  callbackURL: process.env.callbackURL || configAuth.facebookAuth.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
@@ -100,9 +100,9 @@ app.get('/userLoggedIn', function(req, res) {
 });
 
 
-app.get('/login', function(req,res) {
-  res.send('You are logged in!');
-});
+// app.get('/login', function(req,res) {
+//   res.send('You are logged in!');
+// });
 
 //All get and post requests come here before middleware
 
@@ -177,40 +177,13 @@ app.post('/upload', function(req, res) {
               for (var words in obj) {
                 arrayOfObj.push({key: words, count: obj[words]});
               }
-
-              // res.json(arrayOfObj);
               res.send(arrayOfObj);
             }
           }
         });
-          // res.send('File uploaded!');
       });
-
     })(file);
-
-
   }
-
-
-
-  // sampleFile.mv(__dirname + '/db/pics/hi.jpg', function(err) {
-  //   if (err) {
-  //     return res.status(500).send(err);
-  //   }
-  //   var vision = gcloud.vision({
-  //     projectId: 'vizly-161619',
-  //     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  //   });
-  //   vision.detectLabels(__dirname + '/db/pics/hi.jpg', function(err, result, res) {
-  //     if (err) {
-  //       console.log('Error ', err);
-  //     } else {
-  //       console.log(result);
-  //     }
-  //   });
-  //   res.send('File uploaded!');
-  // });
-
 });
 
 
