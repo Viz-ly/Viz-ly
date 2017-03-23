@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var visionKey = require('./config/vision');
+// var visionKey = require('./config/vision');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 // var visionKey = null;
@@ -28,7 +28,7 @@ passport.deserializeUser(function(id, done) {
 
 var gcloud = require('google-cloud')( {
   projectId: 'vizly-161619',
-  key: visionKey.VISION_API_KEY || process.env.VISION_API_KEY
+  key: process.env.VISION_API_KEY
 });
 
 
@@ -48,9 +48,9 @@ app.use('/', express.static(__dirname + '/../client'));
 // });
 
 passport.use(new FacebookStrategy({
-  clientID: process.env.Facebook_clientID || configAuth.facebookAuth.clientID,
-  clientSecret: process.env.Facebook_clientSecret || configAuth.facebookAuth.clientSecret,
-  callbackURL: process.env.callbackURL || configAuth.facebookAuth.callbackURL
+  clientID: process.env.Facebook_clientID,
+  clientSecret: process.env.Facebook_clientSecret,
+  callbackURL: process.env.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
