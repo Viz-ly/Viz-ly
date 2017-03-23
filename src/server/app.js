@@ -200,13 +200,13 @@ app.post('/upload', function(req, res) {
       //dups++
       //continue
     (function(file) {
-      sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',function(err) {
+      sampleFile[file].mv(__dirname + '/db/pic' + file + '.jpg',function(err) {
         if (err) {
           console.log('Errormv', err)
           res.status(500).send(err);
         }
         console.log('file---------', file);
-        vision.detectLabels(__dirname + '/db/pics/pic' + file + '.jpg', function(err, result, apiResponse) {
+        vision.detectLabels(__dirname + '/db/pic' + file + '.jpg', function(err, result, apiResponse) {
           if (err) {
             console.log('Error ', err);
             res.status(500).send(err);
