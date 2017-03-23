@@ -75,7 +75,7 @@ class App extends React.Component {
     if (this.state.user) {
       return (
         <div>
-        <h1> Who is the best???????? {this.state.user} is the best!!!!</h1>
+        <h4> Welcome, {this.state.user}!</h4>
         <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
           <WordList list={this.state.wordList}/>
           </div>
@@ -84,7 +84,7 @@ class App extends React.Component {
       return (
         <div>
           <Login/>
-          
+
         </div>
       );
     };
