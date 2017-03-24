@@ -40,6 +40,13 @@ export default class Charts extends React.Component {
 
       var data = list;
 
+      // debugger;
+      var chart = document.getElementById("chart");
+      if (!!chart) {
+        chart.remove();
+        document.getElementById("controls").remove();
+      }
+
       // scale axis based on the count of the data
       var x = d3.scale.ordinal()
                 .domain(data.map(function (entry) {
@@ -323,13 +330,17 @@ export default class Charts extends React.Component {
     console.log('list', this.props.list);
     if (this.props.list.length > 0) {
       this.makeCharts(this.props.list);
-      return (
-        <div>CHARTS!</div>
-      );
-    } else {
-      return (
-        <div>NO CHARTS!</div>
-      );
+      // return (
+      //   <div>CHARTS!</div>
+      // );
     }
+    return (
+      <div></div>
+    );
+    //  else {
+    //   return (
+    //     <div>NO CHARTS!</div>
+    //   );
+    // }
   }
 }
