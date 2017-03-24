@@ -28,7 +28,7 @@ class App extends React.Component {
       processData: false,
       success: (data) => {
         console.log('ajax sent!', data);
-        this.setState({user: data.name, wordList: data.words});
+        this.setState({user: data[0], wordList: data[1]});
         console.log(this.state.user);
       },
       error: function() {
