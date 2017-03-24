@@ -24,7 +24,8 @@ var Schema = mongoose.Schema({
   username: String,
   provider: String,
   facebook: Object,
-  pics: Array
+  pics: Array,
+  words: Array
 });
 
 

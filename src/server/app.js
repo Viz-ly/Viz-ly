@@ -151,7 +151,8 @@ app.post('/upload', function(req, res) {
     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
   });
 
-  var arrayStrings = [];
+  console.log('db words!!!', req.user.words);
+  var arrayStrings = req.user.words;
 
   for (var file = 0; file < sampleFile.length; file++) {
     (function(file) {
@@ -177,6 +178,28 @@ app.post('/upload', function(req, res) {
               for (var words in obj) {
                 arrayOfObj.push({key: words, count: obj[words]});
               }
+              console.log('req.user', req.user);
+              User.findOne({'username': req.user.username}, function(err, user) {
+                if (err) {
+                  console.log('Error', err);
+                }
+                else if (!user) {
+                  console.log('user not found');
+                } else {
+                  console.log('user found', user);
+                  console.log('hi baeeee', arrayStrings);
+                  user.words = arrayOfObj;
+                  user.save(function(err) {
+                    if (err) {
+                      console.log('Error saving words');
+                    } else {
+                      console.log('Save word list success!')
+                    }
+                  });
+                }
+              })
+
+
               res.send(arrayOfObj);
             }
           }

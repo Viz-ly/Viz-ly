@@ -19,7 +19,7 @@ class App extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     console.log('componentWillMount fired!');
     $.ajax({
       url: '/userLoggedIn',
@@ -27,8 +27,8 @@ class App extends React.Component {
       contentType: false,
       processData: false,
       success: (data) => {
-        console.log('ajax sent!');
-        this.setState({user: data.name});
+        console.log('ajax sent!', data);
+        this.setState({user: data.name, wordList: data.words});
         console.log(this.state.user);
       },
       error: function() {
