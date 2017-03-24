@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Login from './components/login.jsx';
 import Upload from './components/upload.jsx';
 import WordList from './components/wordlist.jsx';
-
+import Charts from './components/charts.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +13,8 @@ class App extends React.Component {
     this.state = {
       files: [],
       wordList: [],
-      color: 'gree',
+      uploading: false,
+      error: false,
       user: null
     };
   }
@@ -40,6 +41,7 @@ class App extends React.Component {
 
   handleUpload(e) {
     e.preventDefault();
+    this.setState({uploading: true, error: false});
     var self = this;
     console.log('handle upload!');
     var form = new FormData();
@@ -61,10 +63,11 @@ class App extends React.Component {
       processData: false,
       success: function(data) {
         console.log(data);
-        self.setState({wordList: data});
+        self.setState({wordList: data, uploading: false});
       },
       error: function() {
         console.log('error');
+        self.setState({error: true, uploading: false});
       }
     });
   }
@@ -72,19 +75,28 @@ class App extends React.Component {
     this.setState({files: e.target.files})
   }
   render () {
+    console.log('uploading?', this.state.uploading);
     if (this.state.user) {
       return (
         <div>
-        <h1> Who is the best???????? {this.state.user} is the best!!!!</h1>
-        <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
-          <WordList list={this.state.wordList}/>
-          </div>
+          <h4> Welcome, {this.state.user}!</h4>
+          <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
+          {this.state.error && <h6>Sorry you encountered an error. Please try again later!</h6>}
+          {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
+                <div>
+                  <WordList list={this.state.wordList}/>
+                  <Charts list={this.state.wordList}/>
+                </div>
+                }
+
+
+        </div>
       );
     } else {
       return (
         <div>
           <Login/>
-          
+
         </div>
       );
     };

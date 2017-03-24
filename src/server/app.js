@@ -1,8 +1,8 @@
 var express = require('express');
 var path = require('path');
-// var visionKey = require('./config/vision.js');
+var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
-var fileUpload = require('express-fileUpload');
+var fileUpload = require('express-fileupload');
 
 
 var session = require('express-session');
@@ -23,20 +23,20 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// var gcloud = require('google-cloud')( {
-//   projectId: 'vizly-161619',
-//   keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-//   credentials: __dirname + '/config/Vizly-143f14765612.json',
-//   key: visionKey.VISION_API_KEY
-// });
+var gcloud = require('google-cloud')( {
+  projectId: 'vizly-161619',
+  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/Vizly-143f14765612.json',
+  key: visionKey.VISION_API_KEY
+});
 
 
 //ROUTES GO HERE
 var app = express();
 
 app.use(bodyParser.json());
-app.use(session({ secret: 'keyboard cat', 
-  resave: false, 
+app.use(session({ secret: 'keyboard cat',
+  resave: false,
   saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -47,14 +47,14 @@ app.get('/', function(req, res) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: configAuth.facebookAuth.clientID,
-  clientSecret: configAuth.facebookAuth.clientSecret,
-  callbackURL: configAuth.facebookAuth.callbackURL
+  clientID: process.env.Facebook_clientID || configAuth.facebookAuth.clientID,
+  clientSecret: process.env.Facebook_clientSecret || configAuth.facebookAuth.clientSecret,
+  callbackURL: process.env.callbackURL || configAuth.facebookAuth.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
-      if (err) { 
-        return done(err); 
+      if (err) {
+        return done(err);
       }
       //if no user was found, create a new user with values from Facebook
       if (!user) {
@@ -100,7 +100,9 @@ app.get('/userLoggedIn', function(req, res) {
 });
 
 
-
+// app.get('/login', function(req,res) {
+//   res.send('You are logged in!');
+// });
 
 //All get and post requests come here before middleware
 
@@ -175,40 +177,13 @@ app.post('/upload', function(req, res) {
               for (var words in obj) {
                 arrayOfObj.push({key: words, count: obj[words]});
               }
-
-              // res.json(arrayOfObj);
               res.send(arrayOfObj);
             }
           }
         });
-          // res.send('File uploaded!');
       });
-
     })(file);
-
-
   }
-
-
-
-  // sampleFile.mv(__dirname + '/db/pics/hi.jpg', function(err) {
-  //   if (err) {
-  //     return res.status(500).send(err);
-  //   }
-  //   var vision = gcloud.vision({
-  //     projectId: 'vizly-161619',
-  //     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  //   });
-  //   vision.detectLabels(__dirname + '/db/pics/hi.jpg', function(err, result, res) {
-  //     if (err) {
-  //       console.log('Error ', err);
-  //     } else {
-  //       console.log(result);
-  //     }
-  //   });
-  //   res.send('File uploaded!');
-  // });
-
 });
 
 
