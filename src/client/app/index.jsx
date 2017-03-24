@@ -15,7 +15,8 @@ class App extends React.Component {
       wordList: [],
       uploading: false,
       error: false,
-      user: null
+      user: null,
+      duplicates: false
     };
   }
 
@@ -41,7 +42,7 @@ class App extends React.Component {
 
   handleUpload(e) {
     e.preventDefault();
-    this.setState({uploading: true, error: false});
+    this.setState({uploading: true, error: false, duplicates: false});
     var self = this;
     console.log('handle upload!');
     var form = new FormData();
@@ -63,7 +64,7 @@ class App extends React.Component {
       processData: false,
       success: function(data) {
         console.log(data);
-        self.setState({wordList: data, uploading: false});
+        self.setState({wordList: data[0], uploading: false, duplicates: data[1] > 0});
       },
       error: function() {
         console.log('error');
@@ -82,6 +83,7 @@ class App extends React.Component {
           <h4> Welcome, {this.state.user}!</h4>
           <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
           {this.state.error && <h6>Sorry you encountered an error. Please try again later!</h6>}
+          {this.state.duplicates && <h6>It seems you have submitted at least one of the same photos already. We went ahead and excluded it from our chart!</h6>}
           {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
                 <div>
                   <WordList list={this.state.wordList}/>

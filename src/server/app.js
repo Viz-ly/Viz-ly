@@ -161,7 +161,7 @@ app.post('/upload', function(req, res) {
   }
 
   var sampleFile = req.files.sampleFile;
-  console.log('sample files---------', sampleFile.length);
+  console.log('sample files---------', sampleFile);
   if (sampleFile.length === undefined) {
     sampleFile = [sampleFile];
   }
@@ -174,8 +174,19 @@ app.post('/upload', function(req, res) {
 
   console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
+  var pics = JSON.parse(req.user.pics);
+  var dups = 0;
 
   for (var file = 0; file < sampleFile.length; file++) {
+    console.log('sample file nameeeee', sampleFile[file].name);
+    // if sample file name is in db
+    if (pics[sampleFile[file].name]) {
+      console.log('found duplicate!!*******************');
+      dups++;
+      continue;
+    }
+      //dups++
+      //continue
     (function(file) {
       sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',function(err) {
         if (err) {
@@ -189,6 +200,7 @@ app.post('/upload', function(req, res) {
           } else {
             resultCount++
             arrayStrings = arrayStrings.concat(result);
+            pics[sampleFile[file].name] = true;
             console.log('result-------------', result);
             if (resultCount === sampleFile.length) {
               // var arrayOfObj = [];
@@ -210,8 +222,10 @@ app.post('/upload', function(req, res) {
                   console.log('user not found');
                 } else {
                   console.log('user found', user);
-                  console.log('hi baeeee', arrayOfObj);
+                  // console.log('hi baeeee', arrayOfObj);
                   user.words = arrayStrings;
+                  user.pics = JSON.stringify(pics);
+                  console.log('USER PICS', user.pics);
                   user.save(function(err) {
                     if (err) {
                       console.log('Error saving words', err);
@@ -222,14 +236,19 @@ app.post('/upload', function(req, res) {
                 }
               })
 
-
-              res.send(arrayOfObj);
+              console.log('duplicates', dups);
+              res.send([arrayOfObj, dups]);
             }
           }
         });
       });
     })(file);
   }
+  if (sampleFile.length == dups) {
+    var arrayOfObj = createObject(req, arrayStrings);
+    res.send([arrayOfObj, dups]);
+  }
+
 });
 
 
