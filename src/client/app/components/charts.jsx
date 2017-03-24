@@ -8,7 +8,7 @@ export default class Charts extends React.Component {
     super(props);
   }
 
-  d3stuff() {
+  makeCharts(list) {
       var w = 800;
       var h = 450;
       var margin = {
@@ -22,21 +22,23 @@ export default class Charts extends React.Component {
 
       // var data = [123, 531, 30, 64, 87, 173, 131];
 
-      var data = [
-        {key: 'house',    count: 5},
-        {key: 'cats',     count: 20},
-        {key: 'selfie',   count: 80},
-        {key: 'dogs',     count: 30},
-        {key: 'nature',   count: 10},
-        {key: 'computer', count: 12},
-        {key: 'people',   count: 70},
-        {key: 'pokemon',  count: 3},
-        {key: 'cups',     count: 7},
-        {key: 'keyboards',count: 24},
-        {key: 'bottles',  count: 15},
-        {key: 'glasses',  count: 18},
-        {key: 'walls',    count: 36}
-      ]
+      // var data = [
+      //   {key: 'house',    count: 5},
+      //   {key: 'cats',     count: 20},
+      //   {key: 'selfie',   count: 80},
+      //   {key: 'dogs',     count: 30},
+      //   {key: 'nature',   count: 10},
+      //   {key: 'computer', count: 12},
+      //   {key: 'people',   count: 70},
+      //   {key: 'pokemon',  count: 3},
+      //   {key: 'cups',     count: 7},
+      //   {key: 'keyboards',count: 24},
+      //   {key: 'bottles',  count: 15},
+      //   {key: 'glasses',  count: 18},
+      //   {key: 'walls',    count: 36}
+      // ]
+
+      var data = list;
 
       // scale axis based on the count of the data
       var x = d3.scale.ordinal()
@@ -74,7 +76,7 @@ export default class Charts extends React.Component {
 
       //creates svg element
       // debugger;
-      var svg = d3.select("#charts").append("svg")
+      var svg = d3.select("body").append("svg")
                   .attr("id", "chart")
                   .attr("width", w)
                   .attr("height", h);
@@ -86,7 +88,7 @@ export default class Charts extends React.Component {
 
 
       //adding a sort button
-      var controls = d3.select('#charts')
+      var controls = d3.select('body')
                     .append('div')
                     .attr('id', 'controls')
 
@@ -320,6 +322,7 @@ export default class Charts extends React.Component {
     // );
     console.log('list', this.props.list);
     if (this.props.list.length > 0) {
+      this.makeCharts(this.props.list);
       return (
         <div>CHARTS!</div>
       );
