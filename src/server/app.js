@@ -93,10 +93,31 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
 
+var createObject = function(req, arrayStrings) {
+  var arrayOfObj = [];
+  var obj = {};
+  console.log('req user words==========', req.user.words);
+  for (var word = 0; word < arrayStrings.length; word++) {
+    obj[arrayStrings[word]] ? obj[arrayStrings[word]]++ : obj[arrayStrings[word]] = 1;
+  }
+  for (var words in obj) {
+    arrayOfObj.push({key: words, count: obj[words]});
+  }
+  return arrayOfObj;
+};
+
+
 app.get('/userLoggedIn', function(req, res) {
   console.log('---------------------------', req.user);
   // db.addFakeUser(req);
-  res.send(req.user);
+  // var arrayOfObj = [];
+  if (req.user) {
+    var arrayOfObj = createObject(req, req.user.words);
+    res.send([req.user.name, arrayOfObj]);
+  } else {
+    res.send([undefined, []]);
+  }
+  // var arrayOfObj = createObject(req, req.user.words);
 });
 
 
@@ -151,7 +172,8 @@ app.post('/upload', function(req, res) {
     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
   });
 
-  var arrayStrings = [];
+  console.log('db words!!!', req.user.words);
+  var arrayStrings = req.user.words;
 
   for (var file = 0; file < sampleFile.length; file++) {
     (function(file) {
@@ -169,14 +191,38 @@ app.post('/upload', function(req, res) {
             arrayStrings = arrayStrings.concat(result);
             console.log('result-------------', result);
             if (resultCount === sampleFile.length) {
-              var arrayOfObj = [];
-              var obj = {};
-              for (var word = 0; word < arrayStrings.length; word++) {
-                obj[arrayStrings[word]] ? obj[arrayStrings[word]]++ : obj[arrayStrings[word]] = 1;
-              }
-              for (var words in obj) {
-                arrayOfObj.push({key: words, count: obj[words]});
-              }
+              // var arrayOfObj = [];
+              // var obj = {};
+              // console.log('req user words==========', req.user.words);
+              // for (var word = 0; word < arrayStrings.length; word++) {
+              //   obj[arrayStrings[word]] ? obj[arrayStrings[word]]++ : obj[arrayStrings[word]] = 1;
+              // }
+              // for (var words in obj) {
+              //   arrayOfObj.push({key: words, count: obj[words]});
+              // }
+              var arrayOfObj = createObject(req, arrayStrings);
+              console.log('req.user', req.user);
+              User.findOne({'username': req.user.username}, function(err, user) {
+                if (err) {
+                  console.log('Error', err);
+                }
+                else if (!user) {
+                  console.log('user not found');
+                } else {
+                  console.log('user found', user);
+                  console.log('hi baeeee', arrayOfObj);
+                  user.words = arrayStrings;
+                  user.save(function(err) {
+                    if (err) {
+                      console.log('Error saving words', err);
+                    } else {
+                      console.log('Save word list success!')
+                    }
+                  });
+                }
+              })
+
+
               res.send(arrayOfObj);
             }
           }
@@ -185,6 +231,8 @@ app.post('/upload', function(req, res) {
     })(file);
   }
 });
+
+
 
 
 module.exports = app;
