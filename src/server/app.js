@@ -224,7 +224,9 @@ app.post('/upload', function(req, res) {
                   console.log('user found', user);
                   // console.log('hi baeeee', arrayOfObj);
                   user.words = arrayStrings;
+                  // user.words = [];
                   user.pics = JSON.stringify(pics);
+                  // user.pics = JSON.stringify({});
                   console.log('USER PICS', user.pics);
                   user.save(function(err) {
                     if (err) {
