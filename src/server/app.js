@@ -177,6 +177,8 @@ app.post('/upload', function(req, res) {
   var pics = JSON.parse(req.user.pics);
   var dups = 0;
 
+  var arrayStrings = [];
+
   for (var file = 0; file < sampleFile.length; file++) {
     console.log('sample file nameeeee', sampleFile[file].name);
     // if sample file name is in db
