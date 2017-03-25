@@ -246,7 +246,7 @@ app.post('/upload', function(req, res) {
       });
     })(file);
   }
-  if (sampleFile.length == dups) {
+  if (sampleFile.length === dups) {
     var arrayOfObj = createObject(req, arrayStrings);
     res.send([arrayOfObj, dups]);
   }
