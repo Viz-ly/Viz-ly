@@ -30,6 +30,7 @@ bower_components/
 
 photos/
 src/server/config/vision.js
+src/server/config/Vizly-143f14765612.json
 
 src/client/public/bundle.js
 
