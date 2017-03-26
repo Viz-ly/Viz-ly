@@ -3,7 +3,7 @@ import Word from './word.jsx';
 
 var WordList = (props) => {
   return (
-    <div>
+    <div id="word-list">
       {props.list.map(word => <Word word={word}/>)}
     </div>
   );

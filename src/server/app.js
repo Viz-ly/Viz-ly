@@ -64,7 +64,9 @@ passport.use(new FacebookStrategy({
           email: 'tbd',
           username: profile.userName || profile.id,
           provider: 'facebook',
-          facebook: profile._json
+          facebook: profile._json,
+          words: [],
+          pics: JSON.stringify({})
         });
         console.log(user + 'veggies!');
         user.save(function(err) {
@@ -151,7 +153,6 @@ app.get('/testfind', function(req, res) {
 app.use(fileUpload());
 
 
-
 app.post('/upload', function(req, res) {
   // console.log('in upload!');
   console.log('files----------', req.files);
@@ -172,16 +173,22 @@ app.post('/upload', function(req, res) {
     keyFilename: __dirname + '/config/Vizly-143f14765612.json',
   });
 
-  console.log('db words!!!', req.user.words);
+  // console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
+  // var arrayStrings = [];
   var pics = JSON.parse(req.user.pics);
+  // var pics = {};
   var dups = 0;
+
+  // var arrayStrings = [];
 
   for (var file = 0; file < sampleFile.length; file++) {
     console.log('sample file nameeeee', sampleFile[file].name);
     // if sample file name is in db
     if (pics[sampleFile[file].name]) {
       console.log('found duplicate!!*******************');
+
+      /************UNCOMMENT DUPS AND CONTINUE BEFORE PUSHING********/
       dups++;
       continue;
     }
@@ -224,6 +231,7 @@ app.post('/upload', function(req, res) {
                   console.log('user found', user);
                   // console.log('hi baeeee', arrayOfObj);
                   user.words = arrayStrings;
+                  //TO RESET DATABASE WORDS AND PICS, save empty array and object into db
                   // user.words = [];
                   user.pics = JSON.stringify(pics);
                   // user.pics = JSON.stringify({});

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bubble Chart</title>
+    <link rel="stylesheet" href="bubble.css">
+    <script type="text/javascript" src="d3.min.js"></script>
+  </head>
+  <body>
+    <p>Bubble Chart</p>
+    <div class="chart"></div>
+  </body>
+  <script>
+
+  var wordsList = [
+    {key: 'house', 		count: 5},
+    {key: 'cats', 		count: 20},
+    {key: 'selfie', 	count: 80},
+    {key: 'dogs', 		count: 30},
+    {key: 'nature', 	count: 10},
+    {key: 'computer', count: 12},
+    {key: 'people', 	count: 70},
+    {key: 'cups', 		count: 7},
+    {key: 'keyboards',count: 24},
+    {key: 'bottles',	count: 15},
+    {key: 'glasses',	count: 18},
+    {key: 'walls',		count: 36}
+  ]
+
+  function bubbleChart() {
+    var width = 800;
+    var height = 600;
+
+    var center = { x: width / 2, y: height / 2 };
+
+    // Used when setting up force and
+    // moving around nodes
+    var damper = 0.102;
+
+    // These will be set in create_nodes and create_vis
+    var svg = null;
+    var bubbles = null;
+    var nodes = [];
+
+    function charge(d) {
+      return -Math.pow(d.radius, 2.0) / 8;
+    }
+
+    var force = d3.layout.force()
+      .size([width, height])
+      .charge(charge)
+      .gravity(-0.01)
+      .friction(0.9);
+
+    //sets color of the bubbles
+    var fillColor = d3.scale.ordinal()
+      .domain(['low', 'medium', 'high'])
+      .range(['#d84b2a', '#beccae', '#7aa25c']);
+
+    // Sizes bubbles based on their area instead of raw radius
+    var radiusScale = d3.scale.pow()
+      .exponent(0.5)
+      .range([5, 95]);
+
+    //manipulates raw data into each node
+    function createNodes(rawData) {
+      var myNodes = rawData.map(function (d) {
+        return {
+          radius: radiusScale(+d.count),
+          count: d.count,
+          word: d.key
+        };
+      });
+
+      return myNodes;
+    }
+
+     //function to add chart into the DOM
+    var chart = function chart(selector, rawData) {
+      var maxAmount = d3.max(rawData, function (d) { return +d.count; });
+      radiusScale.domain([0, maxAmount]);
+
+      nodes = createNodes(rawData);
+      // Set the force's nodes to our newly created nodes array.
+      force.nodes(nodes);
+
+      //creates svg element
+      svg = d3.select(selector)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      // Bind nodes data to what will become DOM elements to represent them.
+      bubbles = svg.selectAll('.bubble')
+        .data(nodes)
+        .enter()
+        .append('g').call(force.start)
+
+      // Create new circle elements each with class `bubble`.
+      // There will be one circle.bubble for each object in the nodes array.
+      bubbles.append('circle')
+        .classed('bubble', true)
+        .attr('r', function (d) { return d.radius; })
+        .attr('fill', function (d) { return fillColor(d); })
+        .attr('stroke', function (d) { return d3.rgb(fillColor(d)).darker(); })
+        .attr('stroke-width', 2)
+        // .on('mouseover', showDetail)
+        // .on('mouseout', hideDetail);
+
+      bubbles.append('text')
+        .attr('text-anchor', 'middle')
+        .text(function (d) { return d.word; })
+        .style({
+            "fill":"black",
+            "font-size": "12px"
+        })
+
+      // Fancy transition to make bubbles appear, ending with the
+      // correct radius
+      bubbles.transition()
+        .duration(1000)
+        .attr('r', function (d) { return d.radius; })
+
+      groupBubbles();
+    };
+
+    function groupBubbles() {
+
+      force.on('tick', function (e) {
+        bubbles.each(moveToCenter(e.alpha))
+          .attr('transform', function (d) {
+            return `translate(${d.x}, ${d.y})`;
+          })
+      });
+
+      force.start();
+    }
+
+    function moveToCenter(alpha) {
+      return function (d) {
+        d.x = d.x + (center.x - d.x) * damper * alpha;
+        d.y = d.y + (center.y - d.y) * damper * alpha;
+      };
+    }
+
+    // return the chart function from closure.
+    return chart;
+  }
+
+  //initialization code
+  var myBubbleChart = bubbleChart();
+
+  function display(data) {
+    myBubbleChart('.chart', data);
+  }
+
+  //calls the local data
+  display(wordsList)
+
+  </script>
+</html>
