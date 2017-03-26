@@ -8,7 +8,7 @@ export default class Charts extends React.Component {
     super(props);
   }
 
-  makeCharts(list) {
+  makeBarChart(list) {
       var w = 800;
       var h = 450;
       var margin = {
@@ -20,28 +20,10 @@ export default class Charts extends React.Component {
       var width = w - margin.left - margin.right;
       var height = h - margin.top - margin.bottom;
 
-      // var data = [123, 531, 30, 64, 87, 173, 131];
-
-      // var data = [
-      //   {key: 'house',    count: 5},
-      //   {key: 'cats',     count: 20},
-      //   {key: 'selfie',   count: 80},
-      //   {key: 'dogs',     count: 30},
-      //   {key: 'nature',   count: 10},
-      //   {key: 'computer', count: 12},
-      //   {key: 'people',   count: 70},
-      //   {key: 'pokemon',  count: 3},
-      //   {key: 'cups',     count: 7},
-      //   {key: 'keyboards',count: 24},
-      //   {key: 'bottles',  count: 15},
-      //   {key: 'glasses',  count: 18},
-      //   {key: 'walls',    count: 36}
-      // ]
-
       var data = list;
 
       // debugger;
-      var chart = document.getElementById("chart");
+      var chart = document.getElementById("bar-chart");
       if (!!chart) {
         chart.remove();
         document.getElementById("controls").remove();
@@ -84,7 +66,7 @@ export default class Charts extends React.Component {
       //creates svg element
       // debugger;
       var svg = d3.select("body").append("svg")
-                  .attr("id", "chart")
+                  .attr("id", "bar-chart")
                   .attr("width", w)
                   .attr("height", h);
 
@@ -321,24 +303,177 @@ export default class Charts extends React.Component {
 
   }
 
+
+/************************BUBBLE CHART*******************************/
+
+
+
+
+  makeBubbleChart(data) {
+    function bubbleChart() {
+      var width = 800;
+      var height = 600;
+
+      var center = { x: width / 2, y: height / 2 };
+
+      // Used when setting up force and
+      // moving around nodes
+      var damper = 0.102;
+
+      // These will be set in create_nodes and create_vis
+      var svg = null;
+      var bubbles = null;
+      var nodes = [];
+
+      function charge(d) {
+        return -Math.pow(d.radius, 2.0) / 8;
+      }
+
+      var force = d3.layout.force()
+        .size([width, height])
+        .charge(charge)
+        .gravity(-0.01)
+        .friction(0.9);
+
+      //sets color of the bubbles
+      var fillColor = d3.scale.ordinal()
+        .domain(['low', 'medium', 'high'])
+        .range(['#d84b2a', '#beccae', '#7aa25c']);
+
+      // Sizes bubbles based on their area instead of raw radius
+      var radiusScale = d3.scale.pow()
+        .exponent(0.5)
+        .range([5, 95]);
+
+      //manipulates raw data into each node
+      function createNodes(rawData) {
+        var myNodes = rawData.map(function (d) {
+          return {
+            radius: radiusScale(+d.count),
+            count: d.count,
+            word: d.key
+          };
+        });
+
+        return myNodes;
+      }
+
+       //function to add chart into the DOM
+      var chart = function chart(selector, rawData) {
+        var maxAmount = d3.max(rawData, function (d) { return +d.count; });
+        radiusScale.domain([0, maxAmount]);
+
+        nodes = createNodes(rawData);
+        // Set the force's nodes to our newly created nodes array.
+        force.nodes(nodes);
+
+        //creates svg element
+        svg = d3.select(selector)
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        // Bind nodes data to what will become DOM elements to represent them.
+        bubbles = svg.selectAll('.bubble')
+          .data(nodes)
+          .enter()
+          .append('g').call(force.start)
+
+        // Create new circle elements each with class `bubble`.
+        // There will be one circle.bubble for each object in the nodes array.
+        bubbles.append('circle')
+          .classed('bubble', true)
+          .attr('r', function (d) { return d.radius; })
+          .attr('fill', function (d) { return fillColor(d); })
+          .attr('stroke', function (d) { return d3.rgb(fillColor(d)).darker(); })
+          .attr('stroke-width', 2)
+          // .on('mouseover', showDetail)
+          // .on('mouseout', hideDetail);
+
+        bubbles.append('text')
+          .attr('text-anchor', 'middle')
+          .text(function (d) { return d.word; })
+          .style({
+              "fill":"black",
+              "font-size": "12px"
+          })
+
+        // Fancy transition to make bubbles appear, ending with the
+        // correct radius
+        bubbles.transition()
+          .duration(1000)
+          .attr('r', function (d) { return d.radius; })
+
+        groupBubbles();
+      };
+
+      function groupBubbles() {
+
+        force.on('tick', function (e) {
+          bubbles.each(moveToCenter(e.alpha))
+            .attr('transform', function (d) {
+              return `translate(${d.x}, ${d.y})`;
+            })
+        });
+
+        force.start();
+      }
+
+      function moveToCenter(alpha) {
+        return function (d) {
+          d.x = d.x + (center.x - d.x) * damper * alpha;
+          d.y = d.y + (center.y - d.y) * damper * alpha;
+        };
+      }
+
+      // return the chart function from closure.
+      return chart;
+    }
+
+    //initialization code
+    var myBubbleChart = bubbleChart();
+
+    function display(data) {
+      console.log('DATA INSIDE DISPLAY:', data);
+      myBubbleChart('body', data);
+    }
+
+    //calls display with the passed in data
+    display(data)
+  }
+
+
+
+
+
+
+
+
   render() {
     // this.d3stuff();
     // return (
     //   <div id="charts">CHARTS!!!</div>
 
     // );
-    console.log('list', this.props.list);
-    if (this.props.list.length > 0) {
-      this.makeCharts(this.props.list);
-      // return (
-      //   <div>CHARTS!</div>
-      // );
-    }
-    return (
-      <div>
 
-      </div>
-    );
+    console.log('list', this.props.list);
+
+    if (this.props.list.length > 0) {
+      this.makeBarChart(this.props.list);
+      this.makeBubbleChart(this.props.list);
+
+      return (
+        <div>CHARTS!
+          <div id="bar-chart">Bar Chart</div>
+          <div id="bubble-chart">Bubble Chart</div>
+        </div>
+      );
+    }
+    // return (
+    //   <div>
+    //
+    //   </div>
+    // );
     //  else {
     //   return (
     //     <div>NO CHARTS!</div>

@@ -16,7 +16,7 @@ class App extends React.Component {
       uploading: false,
       error: false,
       user: null,
-      duplicates: false
+      duplicates: true
     };
   }
 
@@ -86,8 +86,8 @@ class App extends React.Component {
           {this.state.duplicates && <h6>It seems you have submitted at least one of the same photos already. We went ahead and excluded it from our chart!</h6>}
           {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
                 <div>
-                  <WordList list={this.state.wordList}/>
                   <Charts list={this.state.wordList}/>
+                  <WordList list={this.state.wordList}/>
                 </div>
                 }
 
