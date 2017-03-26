@@ -189,8 +189,8 @@ app.post('/upload', function(req, res) {
       console.log('found duplicate!!*******************');
 
       /************UNCOMMENT DUPS AND CONTINUE BEFORE PUSHING********/
-      // dups++;
-      // continue;
+      dups++;
+      continue;
     }
       //dups++
       //continue

@@ -16,7 +16,7 @@ class App extends React.Component {
       uploading: false,
       error: false,
       user: null,
-      duplicates: true
+      duplicates: false
     };
   }
 
