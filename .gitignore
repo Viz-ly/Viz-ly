@@ -28,9 +28,6 @@ dist/
 node_modules/
 bower_components/
 
-photos/
-src/server/config/vision.js
-
 src/client/public/bundle.js
 
 ## API keys
