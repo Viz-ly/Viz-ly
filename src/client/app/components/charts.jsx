@@ -44,47 +44,48 @@ export default class Charts extends React.Component {
 
     //create color scales
     var linearColorScale = d3.scale.linear()
-                             .domain([0, data.length])
-                             .range(['#572500', '#F67026']);
+             .domain([0, data.length])
+             .range(['#572500', '#F67026']);
 
     var ordinalColorScale = d3.scale.category20();
 
     //create axis
     var xAxis = d3.svg.axis()
-                  .scale(x)
-                  .orient('bottom');
+              .scale(x)
+              .orient('bottom');
     var yAxis = d3.svg.axis()
-                  .scale(y)
-                  .orient('left');
+              .scale(y)
+              .orient('left');
 
     //create gridlines
     var yGridlines = d3.svg.axis()
-                 .scale(y)
-                 .tickSize(-width, 0, 0)
-                 .tickFormat('')
-                 .orient('left');
+             .scale(y)
+             .tickSize(-width, 0, 0)
+             .tickFormat('')
+             .orient('left');
 
     //creates svg element
     // debugger;
     var svg = d3.select('body').append('svg')
-                .attr('id', 'bar-chart')
-                .attr('width', w)
-                .attr('height', h);
+            .attr('id', 'bar-chart')
+            .attr('width', w)
+            .attr('height', h)
+            .style('background-color', '#F5F2EB')
+            .style('border', '1px solid #CCC')
 
     //creates the GROUP (element) and add the margins in
     var chart = svg.append('g')
-                 .classed('displayed', true)
-                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
-
+           .classed('displayed', true)
+           .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
     //adding a sort button
     var controls = d3.select('body')
-                  .append('div')
-                  .attr('id', 'bar-controls')
+          .append('div')
+          .attr('id', 'bar-controls')
 
     var sort_btn = controls.append('button')
-                  .html('Sort data: ascending')
-                  .attr('state', 0)
+          .html('Sort data: ascending')
+          .attr('state', 0)
 
 
     function drawAxis(params) {
@@ -93,65 +94,65 @@ export default class Charts extends React.Component {
       if (params.initialize) {
         //appends the y axix gridlines
         this.append('g')
-            .call(params.gridlines)
-            .classed('gridline', true)
-            .attr('transform', `translate(0, 0)`)
+          .call(params.gridlines)
+          .classed('gridline', true)
+          .attr('transform', `translate(0, 0)`)
 
         //appends the x and y axis
         this.append('g')
-            .classed('x axis', true)
-            .attr('transform', `translate(0, ${height})`)
-            .call(params.axis.x)
-              //rotate the x axis text
-              .selectAll('text')
-                .classed('x-axis-label', true)
-                .style('text-anchor', 'end')
-                .attr('dx', -8)
-                .attr('dx', 8)
-                //order here matters!!
-                .attr('transform', 'translate(0, 0), rotate(-45)');
+          .classed('x axis', true)
+          .attr('transform', `translate(0, ${height})`)
+          .call(params.axis.x)
+            //rotate the x axis text
+            .selectAll('text')
+              .classed('x-axis-label', true)
+              .style('text-anchor', 'end')
+              .attr('dx', -8)
+              .attr('dx', 8)
+              //order here matters!!
+              .attr('transform', 'translate(0, 0), rotate(-45)');
         this.append('g')
-            .classed('y axis', true)
-            .attr('transform', `translate(0, 0)`)
-            .call(params.axis.y);
+          .classed('y axis', true)
+          .attr('transform', `translate(0, 0)`)
+          .call(params.axis.y);
 
         //adding y axis labels
         //**the selector here is important. class y AND axis
         this.select('.y.axis')
-            .append('text')
-            .attr('x', 0)
-            .attr('y', 0)
-            .style('text-anchor', 'middle')
-            .attr('transform', `translate(-50, ${height/2}) rotate(-90)`)
-            .text('count');
+          .append('text')
+          .attr('x', 0)
+          .attr('y', 0)
+          .style('text-anchor', 'middle')
+          .attr('transform', `translate(-50, ${height/2}) rotate(-90)`)
+          .text('count');
         //adding x axis label
         this.select('.x.axis')
-            .append('text')
-            .attr('x', 0)
-            .attr('y', 0)
-            .style('text-anchor', 'middle')
-            .attr('transform', `translate(${width/2}, 80)`)
-            .text('words')
+          .append('text')
+          .attr('x', 0)
+          .attr('y', 0)
+          .style('text-anchor', 'middle')
+          .attr('transform', `translate(${width/2}, 80)`)
+          .text('words')
       } else {
         //update info
         this.selectAll('g.x.axis')
-            .transition()
-            .duration(500)
-            .delay(200)
-            .ease('bounce')
-            .call(params.axis.x)
+          .transition()
+          .duration(500)
+          .delay(200)
+          .ease('bounce')
+          .call(params.axis.x)
         //reapply the labels
         this.selectAll('.x-axis-label')
-            .style('text-anchor', 'end')
-            .attr('dx', -8)
-            .attr('dy', 8)
-            .attr('transform', 'translate(0,0) rotate(-45)')
+          .style('text-anchor', 'end')
+          .attr('dx', -8)
+          .attr('dy', 8)
+          .attr('transform', 'translate(0,0) rotate(-45)')
         this.selectAll('g.y.axis')
-            .transition()
-            .duration(500)
-            .delay(200)
-            .ease('bounce')
-            .call(params.axis.y)
+          .transition()
+          .duration(500)
+          .delay(200)
+          .ease('bounce')
+          .call(params.axis.y)
       }
     }
 
@@ -216,6 +217,9 @@ export default class Charts extends React.Component {
           // return linearColorScale(i);
           return ordinalColorScale(i);
         })
+        .style('shape-rendering', 'crispEdges')
+
+
 
       this.selectAll('.bar-label')
         .transition()
@@ -375,12 +379,12 @@ export default class Charts extends React.Component {
         force.nodes(nodes);
 
         //creates svg element
-        svg = d3.select(selector)
-          .append('svg')
-          // .classed('bubble-chart', true)
+        svg = d3.select(selector).append('svg')
           .attr('id', 'bubble-chart')
           .attr('width', width)
-          .attr('height', height);
+          .attr('height', height)
+          .style('border', '1px solid #CCC')
+          .style('background-color', '#F5F2EB')
 
         // Bind nodes data to what will become DOM elements to represent them.
         bubbles = svg.selectAll('.bubble')
@@ -472,18 +476,13 @@ export default class Charts extends React.Component {
     //   this.makeBubbleChart(this.props.list);
 
       return (
-        <div>CHARTS!
-
+        <div>
           <div>
-            {
-              this.makeBarChart(this.props.list)
-            }
+            {this.makeBarChart(this.props.list)}
           </div>
 
           <div>
-            {
-              this.makeBubbleChart(this.props.list)
-            }
+            {this.makeBubbleChart(this.props.list)}
           </div>
 
         </div>
