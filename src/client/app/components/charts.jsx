@@ -477,12 +477,12 @@ export default class Charts extends React.Component {
 
       return (
         <div>
-          <div>
-            {this.makeBarChart(this.props.list)}
+          <div className="bubble-chart">
+            {this.makeBubbleChart(this.props.list)}
           </div>
 
-          <div>
-            {this.makeBubbleChart(this.props.list)}
+          <div className="bar-chart">
+            {this.makeBarChart(this.props.list)}
           </div>
 
         </div>
