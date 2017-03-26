@@ -9,11 +9,11 @@ export default class Charts extends React.Component {
   }
 
   makeBarChart(list) {
-    debugger;
+    // debugger;
     var chart = document.getElementById('bar-chart');
     if (!!chart) {
       chart.remove();
-      document.getElementById('controls').remove();
+      document.getElementById('bar-controls').remove();
     }
 
     var w = 800;
@@ -80,7 +80,7 @@ export default class Charts extends React.Component {
     //adding a sort button
     var controls = d3.select('body')
                   .append('div')
-                  .attr('id', 'controls')
+                  .attr('id', 'bar-controls')
 
     var sort_btn = controls.append('button')
                   .html('Sort data: ascending')
@@ -342,9 +342,9 @@ export default class Charts extends React.Component {
         .friction(0.9);
 
       //sets color of the bubbles
-      var fillColor = d3.scale.ordinal()
-        .domain(['low', 'medium', 'high'])
-        .range(['#d84b2a', '#beccae', '#7aa25c']);
+      var fillColor = d3.scale.category20()
+        // .domain(['low', 'medium', 'high'])
+        // .range(['#d84b2a', '#beccae', '#7aa25c']);
 
       // Sizes bubbles based on their area instead of raw radius
       var radiusScale = d3.scale.pow()
@@ -393,8 +393,8 @@ export default class Charts extends React.Component {
         bubbles.append('circle')
           .classed('bubble', true)
           .attr('r', function (d) { return d.radius; })
-          .attr('fill', function (d) { return fillColor(d); })
-          .attr('stroke', function (d) { return d3.rgb(fillColor(d)).darker(); })
+          .attr('fill', function (d, i) { return fillColor(i); })
+          .attr('stroke', function (d, i) { return d3.rgb(fillColor(i)).darker(); })
           .attr('stroke-width', 2)
           // .on('mouseover', showDetail)
           // .on('mouseout', hideDetail);
@@ -466,17 +466,26 @@ export default class Charts extends React.Component {
     // );
 
     // console.log('list', this.props.list);
-
-    // // <div id='bar-chart'>Bar Chart</div>
-    // <div>Bar Chart</div>
-    // // <div id='bubble-chart'>Bubble Chart</div>
-    // <div>Bubble Chart</div>
-    if (this.props.list.length > 0) {
-      this.makeBarChart(this.props.list);
-      this.makeBubbleChart(this.props.list);
+    //
+    // if (this.props.list.length > 0) {
+    //   this.makeBarChart(this.props.list);
+    //   this.makeBubbleChart(this.props.list);
 
       return (
         <div>CHARTS!
+
+          <div>
+            {
+              this.makeBarChart(this.props.list)
+            }
+          </div>
+
+          <div>
+            {
+              this.makeBubbleChart(this.props.list)
+            }
+          </div>
+
         </div>
       );
     }
@@ -490,5 +499,5 @@ export default class Charts extends React.Component {
     //     <div>NO CHARTS!</div>
     //   );
     // }
-  }
+  // }
 }
