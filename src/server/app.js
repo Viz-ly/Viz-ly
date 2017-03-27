@@ -173,9 +173,16 @@ app.post('/upload', function(req, res) {
   }
 
   var resultCount = 0;
+  // var vision = gcloud.vision({
+  //   projectId: 'vizly-161619',
+  //   keyFilename: __dirname + '/config/vizly.json'
+  // });
   var vision = gcloud.vision({
-    projectId: 'vizly-161619',
-    keyFilename: __dirname + '/config/vizly.json'
+    projectId: process.env.VISION_PROJECT_ID,
+    credentials: {
+      client_email: process.env.VISION_CLIENT_EMAIL,
+      private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+    }
   });
 
   // console.log('db words!!!', req.user.words);
