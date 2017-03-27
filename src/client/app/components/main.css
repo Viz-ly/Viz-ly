@@ -18,7 +18,7 @@ body,html{
 .bar-label {
   fill: #000;
   text-anchor: middle;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .axis line,
@@ -34,3 +34,24 @@ body,html{
   stroke: #ccc;
   shape-rendering: crispEdges;
 }
+
+.bubble-chart {
+  border: 5px solid red;
+
+}
+
+
+.x {
+  font-size: 12px;
+}
+
+.welcome {
+
+}
+
+.info {
+
+}
+/** {
+  background-color: purple
+}*/

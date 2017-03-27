@@ -22,11 +22,16 @@ coverage
 build/
 dist/
 
-# Dependency directorys
+# Dependency directories
 # Deployed apps should consider commenting these lines out:
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules/
 bower_components/
+
+
+photos/
+src/server/config/vision.js
+src/server/config/vizly.json
 
 src/client/public/bundle.js
 
@@ -36,3 +41,6 @@ src/client/env/config.js
 src/server/config
 
 src/server/db/pics
+
+# charts
+src/client/app.charts

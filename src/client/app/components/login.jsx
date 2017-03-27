@@ -7,9 +7,9 @@ const iconStyle = {
 
 var Login = (props) => {
   return (
-    <div style={{paddingLeft: 25}}>
+    <div style={{paddingLeft: 25, textAlign: 'left'}}>
       <h1>Viz.ly </h1>
-        <div style={{display: 'inline-block', width: '60%', paddingTop: 100, paddingRight: 10 }}>
+        <div  style={{display: 'inline-block', width: '60%', paddingTop: 100, paddingRight: 10 }}>
           <h2> A picture is worth a thousand words. What do your pictures say about you?</h2>
           <p> At Viz.ly, we apply a sophisticated algorithm to your photo collection, resulting in a dynamic visual profile of who you are that you can share with the world. Getting started is easy:</p>
           <ul style={{marginBottom: 30}}>
