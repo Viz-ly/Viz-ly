@@ -7,7 +7,7 @@ const iconStyle = {
 
 var Login = (props) => {
   return (
-    <div style={{paddingLeft: 25, textAlign: 'left'}}>
+    <div style={{paddingLeft: 25, textAlign: 'left', height: '100%'}}>
       <h1>Viz.ly </h1>
         <div  style={{display: 'inline-block', width: '60%', paddingTop: 100, paddingRight: 10 }}>
           <h2> A picture is worth a thousand words. What do your pictures say about you?</h2>
@@ -20,7 +20,9 @@ var Login = (props) => {
           <a href="/auth/facebook" className="btn btn-primary" ><span className="fa fa-facebook"></span> Facebook Sign Up</a>
         </div>
           <img src={require('../../../../my-icons-collection/png/011-camera-and-photo-album.png')} style={{display: 'inline-block', maxWidth: '35%', paddingTop: 60, verticalAlign: 'top' }} />
+        <footer style={{position: 'absolute', bottom: 0}}>Icons made by <a href='http://www.flaticon.com/authors/tintins'> Tintins </a> and <a href='http://www.freepik.com/'> FreePik </a> from <a href='http://www.flaticon.com'> www.flaticon.com</a></footer>
     </div>
+
   );
 };
 
