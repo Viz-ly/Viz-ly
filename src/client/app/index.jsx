@@ -79,12 +79,15 @@ class App extends React.Component {
     console.log('uploading?', this.state.uploading);
     if (this.state.user) {
       return (
+
         <div className='landing'>
           <form action='/logout' method='get'>
             <input type='submit' value='Logout' />
           </form>
           <h4 className="welcome"> Welcome, {this.state.user}!</h4>
-            <p className="info">To see Viz-ly at work: upload your pictures.
+            <p className="info">To see Viz-ly at work: upload your pictures.</p>
+          <h2 className="welcome"> Welcome, {this.state.user}</h2>
+            <p className="info">To see Viz-ly at work, upload your pictures.
               The more photos you upload, the more dynamic the visualization!
             </p>
           <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>

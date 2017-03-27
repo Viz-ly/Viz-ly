@@ -11,15 +11,27 @@ body,html{
 }
 
 input[type="file"] {
-             position: relative;
-             display: block;
-             margin : 0 auto;
-        }
+  position: relative;
+  display: block;
+  margin : 0 auto;
+  margin-bottom: 25px;
+}
+
+input[type="submit"] {
+  padding: 12px 30px 14px;
+  border-radius: 100px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  border: none;
+}
 
 .landing {
-  position: absolute;
-  width: 100%;
-  top: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
 }
 .bar {
   fill: red;
@@ -64,11 +76,11 @@ input[type="file"] {
 }
 
 .welcome {
-
+  margin-bottom: 25px;
 }
 
 .info {
-
+  margin-bottom: 25px;
 }
 
 .error {
