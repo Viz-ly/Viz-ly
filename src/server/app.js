@@ -25,21 +25,21 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var gcloud = require('google-cloud')( {
-  projectId: 'vizly-161619',
-  // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  credentials: __dirname + '/config/vizly.json',
-  // key: visionKey.VISION_API_KEY
-});
-
 // var gcloud = require('google-cloud')( {
-//   projectId: process.env.VISION_PROJECT_ID,
-//   credentials: {
-//     client_email: process.env.VISION_CLIENT_EMAIL,
-//     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-//   },
-//   key: process.env.VISION_API_KEY
+//   projectId: 'vizly-161619',
+//   // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+//   credentials: __dirname + '/config/vizly.json',
+//   // key: visionKey.VISION_API_KEY
 // });
+
+var gcloud = require('google-cloud')( {
+  projectId: process.env.VISION_PROJECT_ID,
+  credentials: {
+    client_email: process.env.VISION_CLIENT_EMAIL,
+    private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+  },
+  key: process.env.VISION_API_KEY
+});
 
 
 //ROUTES GO HERE
