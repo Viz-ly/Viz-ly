@@ -9,7 +9,7 @@ var db = require('./db/db');
 var User = db.User;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var configAuth = require('../client/env/config'); // COMMENT OUT FOR DEPLOYMENT
+// var configAuth = require('../client/env/config'); // COMMENT OUT FOR DEPLOYMENT
 
 
 passport.serializeUser(function(user, done) {
@@ -23,22 +23,22 @@ passport.deserializeUser(function(id, done) {
 });
 
 // FOR DEVELOPMENT
-var gcloud = require('google-cloud')( {
-  projectId: 'vizly-161619',
-  // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  credentials: __dirname + '/config/vizly.json',
-  // key: visionKey.VISION_API_KEY
-});
+// var gcloud = require('google-cloud')( {
+//   projectId: 'vizly-161619',
+//   // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+//   credentials: __dirname + '/config/vizly.json',
+//   // key: visionKey.VISION_API_KEY
+// });
 
 // FOR DEPLOYMENT
-// var gcloud = require('google-cloud')( {
-//   projectId: process.env.VISION_PROJECT_ID,
-//   credentials: {
-//     client_email: process.env.VISION_CLIENT_EMAIL,
-//     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-//   },
-//   key: process.env.VISION_API_KEY
-// });
+var gcloud = require('google-cloud')( {
+  projectId: process.env.VISION_PROJECT_ID,
+  credentials: {
+    client_email: process.env.VISION_CLIENT_EMAIL,
+    private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+  },
+  key: process.env.VISION_API_KEY
+});
 
 
 //ROUTES GO HERE
@@ -185,19 +185,19 @@ app.post('/upload', function(req, res) {
 
 
   // FOR DEVELOPMENT
-  var vision = gcloud.vision({
-    projectId: 'vizly-161619',
-    keyFilename: __dirname + '/config/vizly.json'
-  });
+  // var vision = gcloud.vision({
+  //   projectId: 'vizly-161619',
+  //   keyFilename: __dirname + '/config/vizly.json'
+  // });
 
   // FOR DEPLOYMENT
-  // var vision = gcloud.vision({
-  //   projectId: process.env.VISION_PROJECT_ID,
-  //   credentials: {
-  //     client_email: process.env.VISION_CLIENT_EMAIL,
-  //     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-  //   }
-  // });
+  var vision = gcloud.vision({
+    projectId: process.env.VISION_PROJECT_ID,
+    credentials: {
+      client_email: process.env.VISION_CLIENT_EMAIL,
+      private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+    }
+  });
 
   // console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
