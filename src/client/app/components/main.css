@@ -10,6 +10,17 @@ body,html{
   border: 1px solid #CCC;
 }
 
+input[type="file"] {
+             position: relative;
+             display: block;
+             margin : 0 auto;
+        }
+
+.landing {
+  position: absolute;
+  width: 100%;
+  top: 30%;
+}
 .bar {
   fill: red;
   shape-rendering: crispEdges;

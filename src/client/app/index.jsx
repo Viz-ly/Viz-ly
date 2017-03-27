@@ -73,13 +73,13 @@ class App extends React.Component {
     });
   }
   handleChange(e) {
-    this.setState({files: e.target.files})
+    this.setState({files: e.target.files});
   }
   render () {
     console.log('uploading?', this.state.uploading);
     if (this.state.user) {
       return (
-        <div>
+        <div className='landing'>
           <form action='/logout' method='get'>
             <input type='submit' value='Logout' />
           </form>
@@ -104,7 +104,7 @@ class App extends React.Component {
 
         </div>
       );
-    };
+    }
   }
 }
 
