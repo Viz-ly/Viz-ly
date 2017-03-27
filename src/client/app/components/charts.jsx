@@ -9,15 +9,14 @@ export default class Charts extends React.Component {
   }
 
   makeBarChart(list) {
-    // debugger;
     var chart = document.getElementById('bar-chart');
     if (!!chart) {
       chart.remove();
       document.getElementById('bar-controls').remove();
     }
 
-    var w = 800;
-    var h = 450;
+    var w = 1080;
+    var h = 600;
     var margin = {
       top: 58,
       bottom: 100,
@@ -28,7 +27,6 @@ export default class Charts extends React.Component {
     var height = h - margin.top - margin.bottom;
 
     var data = list;
-
 
     // scale axis based on the count of the data
     var x = d3.scale.ordinal()
@@ -65,7 +63,6 @@ export default class Charts extends React.Component {
              .orient('left');
 
     //creates svg element
-    // debugger;
     var svg = d3.select('body').append('svg')
             .attr('id', 'bar-chart')
             .attr('width', w)
@@ -117,7 +114,7 @@ export default class Charts extends React.Component {
           .call(params.axis.y);
 
         //adding y axis labels
-        //**the selector here is important. class y AND axis
+        // **the selector here is important. class y AND axis
         this.select('.y.axis')
           .append('text')
           .attr('x', 0)
@@ -126,13 +123,13 @@ export default class Charts extends React.Component {
           .attr('transform', `translate(-50, ${height/2}) rotate(-90)`)
           .text('count');
         //adding x axis label
-        this.select('.x.axis')
-          .append('text')
-          .attr('x', 0)
-          .attr('y', 0)
-          .style('text-anchor', 'middle')
-          .attr('transform', `translate(${width/2}, 80)`)
-          .text('words')
+        // this.select('.x.axis')
+        //   .append('text')
+        //   .attr('x', 0)
+        //   .attr('y', 0)
+        //   .style('text-anchor', 'middle')
+        //   .attr('transform', `translate(${width/2}, 80)`)
+        //   .text('words')
       } else {
         //update info
         this.selectAll('g.x.axis')
@@ -247,7 +244,6 @@ export default class Charts extends React.Component {
         .data(params.data)
         .exit()
         .remove();
-
     }
 
   //d3's event listeners (just like jquery)
@@ -311,9 +307,6 @@ export default class Charts extends React.Component {
 
 /************************BUBBLE CHART*******************************/
 
-
-
-
   makeBubbleChart(data) {
     var chart = document.getElementById('bubble-chart');
     if (!!chart) {
@@ -321,7 +314,7 @@ export default class Charts extends React.Component {
     }
 
     function bubbleChart() {
-      var width = 800;
+      var width = 1080;
       var height = 600;
 
       var center = { x: width / 2, y: height / 2 };
@@ -336,7 +329,7 @@ export default class Charts extends React.Component {
       var nodes = [];
 
       function charge(d) {
-        return -Math.pow(d.radius, 2.0) / 8;
+        return -Math.pow(d.radius, 1.95) / 8;
       }
 
       var force = d3.layout.force()
@@ -421,14 +414,12 @@ export default class Charts extends React.Component {
       };
 
       function groupBubbles() {
-
         force.on('tick', function (e) {
           bubbles.each(moveToCenter(e.alpha))
             .attr('transform', function (d) {
               return `translate(${d.x}, ${d.y})`;
             })
         });
-
         force.start();
       }
 
@@ -438,7 +429,6 @@ export default class Charts extends React.Component {
           d.y = d.y + (center.y - d.y) * damper * alpha;
         };
       }
-
       // return the chart function from closure.
       return chart;
     }
@@ -447,7 +437,6 @@ export default class Charts extends React.Component {
     var myBubbleChart = bubbleChart();
 
     function display(data) {
-      // console.log('DATA INSIDE DISPLAY:', data);
       myBubbleChart('body', data);
     }
 
@@ -455,48 +444,18 @@ export default class Charts extends React.Component {
     display(data)
   }
 
-
-
-
-
-
-
-
   render() {
-    // this.d3stuff();
-    // return (
-    //   <div id='charts'>CHARTS!!!</div>
-
-    // );
-
-    // console.log('list', this.props.list);
-    //
-    // if (this.props.list.length > 0) {
-    //   this.makeBarChart(this.props.list);
-    //   this.makeBubbleChart(this.props.list);
-
-      return (
-        <div>
-          <div className="bubble-chart">
-            {this.makeBubbleChart(this.props.list)}
-          </div>
-
-          <div className="bar-chart">
-            {this.makeBarChart(this.props.list)}
-          </div>
-
+    return (
+      <div>
+        <div className="bubble-chart">
+          {this.makeBubbleChart(this.props.list)}
         </div>
-      );
-    }
-    // return (
-    //   <div>
-    //
-    //   </div>
-    // );
-    //  else {
-    //   return (
-    //     <div>NO CHARTS!</div>
-    //   );
-    // }
-  // }
+
+        <div className="bar-chart">
+          {this.makeBarChart(this.props.list)}
+        </div>
+
+      </div>
+    );
+  }
 }
