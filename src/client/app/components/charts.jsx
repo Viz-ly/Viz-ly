@@ -394,6 +394,7 @@ export default class Charts extends React.Component {
           .attr('fill', function (d, i) { return fillColor(i); })
           .attr('stroke', function (d, i) { return d3.rgb(fillColor(i)).darker(); })
           .attr('stroke-width', 2)
+          .call(force.drag)
           // .on('mouseover', showDetail)
           // .on('mouseout', hideDetail);
 
@@ -405,7 +406,8 @@ export default class Charts extends React.Component {
               'font-size': '12px',
               'font-family': 'Tahoma, Geneva, sans-serif'
           })
-
+          .call(force.drag)
+          
         // Fancy transition to make bubbles appear, ending with the
         // correct radius
         bubbles.transition()
