@@ -140,7 +140,10 @@ export default class Charts extends React.Component {
           .call(params.axis.x)
         //reapply the labels
         this.selectAll('.x-axis-label')
-          .style('text-anchor', 'end')
+          .style({
+            'text-anchor': 'end',
+            'font-family': 'Tahoma, Geneva, sans-serif'
+          })
           .attr('dx', -8)
           .attr('dy', 8)
           .attr('transform', 'translate(0,0) rotate(-45)')
@@ -215,8 +218,6 @@ export default class Charts extends React.Component {
           return ordinalColorScale(i);
         })
         .style('shape-rendering', 'crispEdges')
-
-
 
       this.selectAll('.bar-label')
         .transition()
@@ -401,7 +402,8 @@ export default class Charts extends React.Component {
           .text(function (d) { return d.word; })
           .style({
               'fill':'black',
-              'font-size': '12px'
+              'font-size': '12px',
+              'font-family': 'Tahoma, Geneva, sans-serif'
           })
 
         // Fancy transition to make bubbles appear, ending with the
