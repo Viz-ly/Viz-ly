@@ -178,6 +178,8 @@ app.post('/upload', function(req, res) {
   }
 
   var resultCount = 0;
+
+
   // FOR DEVELOPMENT
   // var vision = gcloud.vision({
   //   projectId: 'vizly-161619',
