@@ -395,8 +395,13 @@ export default class Charts extends React.Component {
           .attr('stroke', function (d, i) { return d3.rgb(fillColor(i)).darker(); })
           .attr('stroke-width', 2)
           .call(force.drag)
-          // .on('mouseover', showDetail)
-          // .on('mouseout', hideDetail);
+          .on('mouseover', function (d, i) {
+            //this is refering to the bar
+            d3.select(this).style('fill', 'yellow');
+          })
+          .on('mouseout', function (d, i) {
+            d3.select(this).style('fill', fillColor(i));
+          });
 
         bubbles.append('text')
           .attr('text-anchor', 'middle')
@@ -407,7 +412,7 @@ export default class Charts extends React.Component {
               'font-family': 'Tahoma, Geneva, sans-serif'
           })
           .call(force.drag)
-          
+
         // Fancy transition to make bubbles appear, ending with the
         // correct radius
         bubbles.transition()
