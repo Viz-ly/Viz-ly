@@ -81,6 +81,7 @@ class App extends React.Component {
     if (this.state.user) {
       return (
         <div>
+          <button>Logout</button>
           <h4 className="welcome"> Welcome, {this.state.user}!</h4>
             <p className="info">To see Viz-ly at work: upload your pictures.
               The more photos you upload, the more dynamic the visualization!
