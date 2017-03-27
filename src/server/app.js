@@ -132,6 +132,10 @@ app.get('/userLoggedIn', function(req, res) {
   // var arrayOfObj = createObject(req, req.user.words);
 });
 
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 // app.get('/login', function(req,res) {
 //   res.send('You are logged in!');
@@ -177,8 +181,10 @@ app.post('/upload', function(req, res) {
     sampleFile = [sampleFile];
   }
 
-  // FOR DEVELOPMENT
   var resultCount = 0;
+
+
+  // FOR DEVELOPMENT
   var vision = gcloud.vision({
     projectId: 'vizly-161619',
     keyFilename: __dirname + '/config/vizly.json'
