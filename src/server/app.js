@@ -25,15 +25,21 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
 var gcloud = require('google-cloud')( {
-  projectId: process.env.VISION_PROJECT_ID,
-  credentials: {
-    client_email: process.env.VISION_CLIENT_EMAIL,
-    private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-  },
-  key: process.env.VISION_API_KEY
+  projectId: 'vizly-161619',
+  // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/vizly.json',
+  // key: visionKey.VISION_API_KEY
 });
+
+// var gcloud = require('google-cloud')( {
+//   projectId: process.env.VISION_PROJECT_ID,
+//   credentials: {
+//     client_email: process.env.VISION_CLIENT_EMAIL,
+//     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+//   },
+//   key: process.env.VISION_API_KEY
+// });
 
 
 //ROUTES GO HERE
@@ -52,9 +58,9 @@ app.use('/', express.static(__dirname + '/../client'));
 // });
 
 passport.use(new FacebookStrategy({
-  clientID: process.env.Facebook_clientID,
-  clientSecret: process.env.Facebook_clientSecret,
-  callbackURL: process.env.callbackURL
+  clientID: process.env.Facebook_clientID || configAuth.facebookAuth.clientID,
+  clientSecret: process.env.Facebook_clientSecret || configAuth.facebookAuth.clientSecret,
+  callbackURL: process.env.callbackURL || configAuth.facebookAuth.callbackURL
 },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}, function(err, user) {
@@ -177,6 +183,7 @@ app.post('/upload', function(req, res) {
   //   projectId: 'vizly-161619',
   //   keyFilename: __dirname + '/config/vizly.json'
   // });
+
   var vision = gcloud.vision({
     projectId: process.env.VISION_PROJECT_ID,
     credentials: {
