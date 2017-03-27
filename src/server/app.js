@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var visionKey = require('./config/vision.js');
+// var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 
@@ -26,8 +26,8 @@ passport.deserializeUser(function(id, done) {
 var gcloud = require('google-cloud')( {
   projectId: 'vizly-161619',
   keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  credentials: __dirname + '/config/Vizly-143f14765612.json',
-  key: visionKey.VISION_API_KEY
+  // credentials: __dirname + '/config/vizly.json',
+  // key: visionKey.VISION_API_KEY
 });
 
 
@@ -170,14 +170,14 @@ app.post('/upload', function(req, res) {
   var resultCount = 0;
   var vision = gcloud.vision({
     projectId: 'vizly-161619',
-    keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+    keyFilename: __dirname + '/config/vizly.json',
   });
 
   // console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
   // var arrayStrings = [];
   var pics = JSON.parse(req.user.pics);
-  // var pics = {};
+
   var dups = 0;
 
   // var arrayStrings = [];
@@ -209,7 +209,7 @@ app.post('/upload', function(req, res) {
             arrayStrings = arrayStrings.concat(result);
             pics[sampleFile[file].name] = true;
             console.log('result-------------', result);
-            if (resultCount === sampleFile.length) {
+            if ((resultCount + dups) === sampleFile.length) {
               // var arrayOfObj = [];
               // var obj = {};
               // console.log('req user words==========', req.user.words);
