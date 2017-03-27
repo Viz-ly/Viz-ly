@@ -69,6 +69,7 @@ export default class Charts extends React.Component {
             .attr('height', h)
             .style('background-color', '#F5F2EB')
             .style('border', '1px solid #CCC')
+            .style('margin', '10px')
 
     //creates the GROUP (element) and add the margins in
     var chart = svg.append('g')
@@ -79,15 +80,15 @@ export default class Charts extends React.Component {
     var controls = d3.select('body')
           .append('div')
           .attr('id', 'bar-controls')
+          .classed('controls', true)
 
     var sort_btn = controls.append('button')
           .html('Sort data: ascending')
           .attr('state', 0)
 
-
     function drawAxis(params) {
 
-      //draw gridlines and axes if initialize, or update info
+      //draw gridlines and axis if initialize, or update info
       if (params.initialize) {
         //appends the y axix gridlines
         this.append('g')
@@ -108,6 +109,7 @@ export default class Charts extends React.Component {
               .attr('dx', 8)
               //order here matters!!
               .attr('transform', 'translate(0, 0), rotate(-45)');
+
         this.append('g')
           .classed('y axis', true)
           .attr('transform', `translate(0, 0)`)
@@ -274,7 +276,6 @@ export default class Charts extends React.Component {
       txt += 'ascending';
     }
 
-    //sets the state **** WILL BE DIFFERENT IN REACT***???
     self.attr('state', state);
     self.html(txt)
 
@@ -379,6 +380,7 @@ export default class Charts extends React.Component {
           .attr('height', height)
           .style('border', '1px solid #CCC')
           .style('background-color', '#F5F2EB')
+          .style('margin', '10px')
 
         // Bind nodes data to what will become DOM elements to represent them.
         bubbles = svg.selectAll('.bubble')
