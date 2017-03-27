@@ -18,7 +18,8 @@ body,html{
 .bar-label {
   fill: #000;
   text-anchor: middle;
-  font-size: 18px;
+  font-size: 12px;
+  font-family: Tahoma, Geneva, sans-serif;
 }
 
 .axis line,
@@ -43,6 +44,12 @@ body,html{
 
 .x {
   font-size: 12px;
+  font-family: Tahoma, Geneva, sans-serif;
+
+}
+
+.y {
+  font-family: Tahoma, Geneva, sans-serif;
 }
 
 .welcome {
@@ -52,6 +59,7 @@ body,html{
 .info {
 
 }
-/** {
-  background-color: purple
-}*/
+
+.error {
+  color: red;
+}

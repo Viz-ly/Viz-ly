@@ -88,8 +88,8 @@ class App extends React.Component {
               The more photos you upload, the more dynamic the visualization!
             </p>
           <Upload upload={this.handleUpload.bind(this)} change={this.handleChange.bind(this)}/>
-          {this.state.error && <h6>Sorry you encountered an error. Please try again later!</h6>}
-          {this.state.duplicates && <h6>It seems you have submitted at least one of the same photos already. We went ahead and excluded it from our chart!</h6>}
+          {this.state.error && <h6 className="error">Sorry you encountered an error. Please try again later!</h6>}
+          {this.state.duplicates && <h6 className="error">It seems you have submitted at least one of the same photos already. We went ahead and excluded it from our chart!</h6>}
           {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
                 <div>
                   {this.state.wordList.length > 0 && <Charts list={this.state.wordList}/>}
