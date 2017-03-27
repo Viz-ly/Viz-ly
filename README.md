@@ -2,7 +2,6 @@
 
 > Viz.ly is a user driven data visualizer to help consumers understand personal trends in their photos.
 
-<<<<<<< HEAD
 ## Team
 
   - Brandon Wong
@@ -28,9 +27,23 @@ Share your results with friends. Who you are with the world.
 
 ## Requirements
 
-- Node 6.4.x
-- NEED TO UPDATE
-
+- Google Cloud/Visions v0.10.0
+- D3 v3.5.5
+- React v15.4.x
+- Node v6.4.x
+- Express v4.15.2
+- MongoDB v2.2.24
+- Mongoose v4.9.0
+- Nodemon v1.11.0
+- passport-facebook v2.1.1
+- passport v0.3.2
+- webpack v2.2.1
+- Babel v6.24.0
+- jQuery v3.1.1
+- url-loader v0.5.8
+- body-parser v1.17.1
+- parser v0.1.4
+- path v0.12.7
 
 ## Development
 
@@ -50,7 +63,6 @@ View the project roadmap [here](https://docs.google.com/spreadsheets/d/13ymrJ6f3
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-=======
 Setup
 ---
 
@@ -64,5 +76,5 @@ npm run build
 ```
 To Run in Dev mode:
 ```
-npm run dev 
+npm run dev
 ```
