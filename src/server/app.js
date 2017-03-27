@@ -1,16 +1,15 @@
 var express = require('express');
 var path = require('path');
-// var visionKey = require('./config/vision.js');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 
 
 var session = require('express-session');
-var db = require('./db/db.js');
+var db = require('./db/db');
 var User = db.User;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var configAuth = require('../client/env/config.js');
+var configAuth = require('../client/env/config'); // COMMENT OUT FOR DEPLOYMENT
 
 
 passport.serializeUser(function(user, done) {
@@ -23,12 +22,23 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// FOR DEVELOPMENT
 var gcloud = require('google-cloud')( {
   projectId: 'vizly-161619',
-  keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-  // credentials: __dirname + '/config/vizly.json',
+  // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/vizly.json',
   // key: visionKey.VISION_API_KEY
 });
+
+// FOR DEPLOYMENT
+// var gcloud = require('google-cloud')( {
+//   projectId: process.env.VISION_PROJECT_ID,
+//   credentials: {
+//     client_email: process.env.VISION_CLIENT_EMAIL,
+//     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+//   },
+//   key: process.env.VISION_API_KEY
+// });
 
 
 //ROUTES GO HERE
@@ -42,9 +52,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', express.static(__dirname + '/../client'));
-app.get('/', function(req, res) {
-  res.send('Gary sux');
-});
+// app.get('/', function(req, res) {
+//   res.send('Gary sux');
+// });
 
 passport.use(new FacebookStrategy({
   clientID: process.env.Facebook_clientID || configAuth.facebookAuth.clientID,
@@ -110,7 +120,7 @@ var createObject = function(req, arrayStrings) {
 
 
 app.get('/userLoggedIn', function(req, res) {
-  console.log('---------------------------', req.user);
+  // console.log('---------------------------', req.user);
   // db.addFakeUser(req);
   // var arrayOfObj = [];
   if (req.user) {
@@ -134,20 +144,20 @@ app.get('/userLoggedIn', function(req, res) {
 //   db.handler(req);
 // });
 
-app.get('/testfind', function(req, res) {
-  if (req.user) {
-    console.log('user here!');
-  }
-  if (!req.user) {
-    console.log('no user here');
-  }
-  console.log('testfind fired');
-  db.User.find()
-  .then(function (data) {
-    console.log(data);
-    res.json(data);
-  });
-});
+// app.get('/testfind', function(req, res) {
+//   if (req.user) {
+//     console.log('user here!');
+//   }
+//   if (!req.user) {
+//     console.log('no user here');
+//   }
+//   console.log('testfind fired');
+//   db.User.find()
+//   .then(function (data) {
+//     console.log(data);
+//     res.json(data);
+//   });
+// });
 
 
 app.use(fileUpload());
@@ -167,11 +177,21 @@ app.post('/upload', function(req, res) {
     sampleFile = [sampleFile];
   }
 
+  // FOR DEVELOPMENT
   var resultCount = 0;
   var vision = gcloud.vision({
     projectId: 'vizly-161619',
-    keyFilename: __dirname + '/config/vizly.json',
+    keyFilename: __dirname + '/config/vizly.json'
   });
+
+  // FOR DEPLOYMENT
+  // var vision = gcloud.vision({
+  //   projectId: process.env.VISION_PROJECT_ID,
+  //   credentials: {
+  //     client_email: process.env.VISION_CLIENT_EMAIL,
+  //     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+  //   }
+  // });
 
   // console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
@@ -195,16 +215,18 @@ app.post('/upload', function(req, res) {
       //dups++
       //continue
     (function(file) {
-      sampleFile[file].mv(__dirname + '/db/pics/pic' + file + '.jpg',function(err) {
+      sampleFile[file].mv(__dirname + '/db/pic' + file + '.jpg',function(err) {
         if (err) {
+          console.log('Errormv', err)
           res.status(500).send(err);
         }
         console.log('file---------', file);
-        vision.detectLabels(__dirname + '/db/pics/pic' + file + '.jpg', function(err, result, apiResponse) {
+        vision.detectLabels(__dirname + '/db/pic' + file + '.jpg', function(err, result, apiResponse) {
           if (err) {
-            // console.log('Error ', err);
+            console.log('Error ', err);
             res.status(500).send(err);
           } else {
+            console.log('apires', apiResponse);
             resultCount++
             arrayStrings = arrayStrings.concat(result);
             pics[sampleFile[file].name] = true;

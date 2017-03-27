@@ -90,7 +90,7 @@ class App extends React.Component {
           {this.state.duplicates && <h6>It seems you have submitted at least one of the same photos already. We went ahead and excluded it from our chart!</h6>}
           {this.state.uploading ? <img src="../spiffygif_46x46.gif"></img> :
                 <div>
-                  <Charts list={this.state.wordList}/>
+                  {this.state.wordList.length > 0 && <Charts list={this.state.wordList}/>}
                 </div>
                 }
 
