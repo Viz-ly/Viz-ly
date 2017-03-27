@@ -1,10 +1,7 @@
 var express = require('express');
 var path = require('path');
-// var visionKey = require('./config/vision');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
-// var visionKey = null;
-// var configAuth = null;
 
 
 var session = require('express-session');
@@ -12,7 +9,7 @@ var db = require('./db/db');
 var User = db.User;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-// var configAuth = require('../client/env/config');
+var configAuth = require('../client/env/config'); // COMMENT OUT FOR DEPLOYMENT
 
 
 passport.serializeUser(function(user, done) {
@@ -25,21 +22,23 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// var gcloud = require('google-cloud')( {
-//   projectId: 'vizly-161619',
-//   // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
-//   credentials: __dirname + '/config/vizly.json',
-//   // key: visionKey.VISION_API_KEY
-// });
-
+// FOR DEVELOPMENT
 var gcloud = require('google-cloud')( {
-  projectId: process.env.VISION_PROJECT_ID,
-  credentials: {
-    client_email: process.env.VISION_CLIENT_EMAIL,
-    private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-  },
-  key: process.env.VISION_API_KEY
+  projectId: 'vizly-161619',
+  // keyFilename: __dirname + '/config/Vizly-143f14765612.json',
+  credentials: __dirname + '/config/vizly.json',
+  // key: visionKey.VISION_API_KEY
 });
+
+// FOR DEPLOYMENT
+// var gcloud = require('google-cloud')( {
+//   projectId: process.env.VISION_PROJECT_ID,
+//   credentials: {
+//     client_email: process.env.VISION_CLIENT_EMAIL,
+//     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+//   },
+//   key: process.env.VISION_API_KEY
+// });
 
 
 //ROUTES GO HERE
@@ -145,20 +144,20 @@ app.get('/userLoggedIn', function(req, res) {
 //   db.handler(req);
 // });
 
-app.get('/testfind', function(req, res) {
-  if (req.user) {
-    console.log('user here!');
-  }
-  if (!req.user) {
-    console.log('no user here');
-  }
-  console.log('testfind fired');
-  db.User.find()
-  .then(function (data) {
-    console.log(data);
-    res.json(data);
-  });
-});
+// app.get('/testfind', function(req, res) {
+//   if (req.user) {
+//     console.log('user here!');
+//   }
+//   if (!req.user) {
+//     console.log('no user here');
+//   }
+//   console.log('testfind fired');
+//   db.User.find()
+//   .then(function (data) {
+//     console.log(data);
+//     res.json(data);
+//   });
+// });
 
 
 app.use(fileUpload());
@@ -178,19 +177,21 @@ app.post('/upload', function(req, res) {
     sampleFile = [sampleFile];
   }
 
+  // FOR DEVELOPMENT
   var resultCount = 0;
-  // var vision = gcloud.vision({
-  //   projectId: 'vizly-161619',
-  //   keyFilename: __dirname + '/config/vizly.json'
-  // });
-
   var vision = gcloud.vision({
-    projectId: process.env.VISION_PROJECT_ID,
-    credentials: {
-      client_email: process.env.VISION_CLIENT_EMAIL,
-      private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
-    }
+    projectId: 'vizly-161619',
+    keyFilename: __dirname + '/config/vizly.json'
   });
+
+  // FOR DEPLOYMENT
+  // var vision = gcloud.vision({
+  //   projectId: process.env.VISION_PROJECT_ID,
+  //   credentials: {
+  //     client_email: process.env.VISION_CLIENT_EMAIL,
+  //     private_key: process.env.VISION_PRIVATE_KEY.replace(/\\n/g, '\n')
+  //   }
+  // });
 
   // console.log('db words!!!', req.user.words);
   var arrayStrings = req.user.words;
