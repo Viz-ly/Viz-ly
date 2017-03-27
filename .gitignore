@@ -40,7 +40,7 @@ src/client/env/config.js
 
 src/server/config
 
-src/server/db/pics
+src/server/db/*.jpg
 
 # charts
 src/client/app.charts
