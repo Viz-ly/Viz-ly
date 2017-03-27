@@ -59,3 +59,7 @@ body,html{
 .info {
 
 }
+
+.error {
+  color: red;
+}
