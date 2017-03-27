@@ -75,13 +75,14 @@ class App extends React.Component {
   handleChange(e) {
     this.setState({files: e.target.files})
   }
-  // <WordList list={this.state.wordList}/>
   render () {
     console.log('uploading?', this.state.uploading);
     if (this.state.user) {
       return (
         <div>
-          <button>Logout</button>
+          <form action='/logout' method='get'>
+            <input type='submit' value='Logout' />
+          </form>
           <h4 className="welcome"> Welcome, {this.state.user}!</h4>
             <p className="info">To see Viz-ly at work: upload your pictures.
               The more photos you upload, the more dynamic the visualization!
@@ -94,8 +95,6 @@ class App extends React.Component {
                   {this.state.wordList.length > 0 && <Charts list={this.state.wordList}/>}
                 </div>
                 }
-
-
         </div>
       );
     } else {
