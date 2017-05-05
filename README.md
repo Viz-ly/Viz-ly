@@ -1,11 +1,26 @@
 # Viz.ly
 
-> Viz.ly is a user driven data visualizer to help consumers understand personal trends in their photos.
+A web application to visualize the photos you love to take
+
+![](./docs/doc1.png)
+
+A web application to visualize the photos you love to take using Google Vision label detection. You authenticate through PassportJS, upload your favorite photos, and Google Vision will return the labels detected rendered in D3 bubble chart and bar chart.
+
+Upload your pictures
+:----------------------------------------------------------------------------------------------------:
+![](./docs/doc2.png)
+
+Bubble Chart View
+:----------------------------------------------------------------------------------------------------:
+![](./docs/doc3.png)
+
+Bar Chart View
+:----------------------------------------------------------------------------------------------------:
+![](./docs/doc4.png)
 
 ## Team
 
   - Brandon Wong
-  - Jon Stewart
   - Kai Yu
   - Tayo Jolaosho
 
@@ -24,6 +39,21 @@
 Take your pictures,
 Upload them to Viz.ly
 Share your results with friends. Who you are with the world.
+
+## Technologies
+
+### Frontend
+- React (ES6)
+- D3
+
+### Backend
+- Node
+- Express
+- MongoDB
+
+### Other
+- Heroku
+- Passport
 
 ## Requirements
 
@@ -51,7 +81,7 @@ Share your results with friends. Who you are with the world.
 
 From within the root directory:
 
-```sh
+```
 npm install
 ```
 
